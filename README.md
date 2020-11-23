@@ -16,10 +16,20 @@ A chance to review things I think I know. An opportunity to learn more. An itch 
 
 Saving on time and memory. Static origin certs are good enough for my purposes.
 
-# What manual steps did I take?
+## What manual steps did I take?
 
 In Cloudflare:
 
 - Enable _Full (strict)_ encryption mode
 - Generate a wildcard origin certificate for my domain
 - Download the Cloudflare CA for origin pull auth
+
+In GitHub:
+
+- Created a `GHCR_TOKEN` secret with a personal access token having package write permission
+
+## How do I cut a release of the cfsync chart?
+
+1. Bump versions in `cfsync/chart/Chart.yaml` and `helmfile.yaml`.
+2. Push to main.
+3. Use the GitHub web UI to create a release with match version tag.
