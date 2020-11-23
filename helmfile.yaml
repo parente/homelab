@@ -89,7 +89,7 @@ releases:
   # Install the whoami app to test ingress
   - name: whoami
     namespace: default
-    chart: parente/webapp
+    chart: k3dlab/webapp
     version: 0.1.0
     atomic: true
     values:
