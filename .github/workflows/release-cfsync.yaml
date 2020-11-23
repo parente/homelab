@@ -3,7 +3,7 @@ name: Release cfsync
 on:
   create:
     tags:
-      - "*"
+      - "cfsync-*"
 
 jobs:
   release:
@@ -14,7 +14,7 @@ jobs:
 
       - name: Get the tag as version number
         id: get_version
-        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/cfsync-}
 
       - name: Setup docker buildx
         uses: docker/setup-buildx-action@v1
@@ -32,7 +32,7 @@ jobs:
           context: ./cfsync
           file: ./cfsync/Dockerfile
           push: true
-          platforms: linux/386
+          platforms: linux/amd64,linux/arm64,linux/386
           tags: |
             ghcr.io/parente/cfsync:${{ steps.get_version.outputs.version }}
             ghcr.io/parente/cfsync:latest
