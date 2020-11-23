@@ -37,11 +37,6 @@ jobs:
             ghcr.io/parente/cfsync:${{ steps.get_version.outputs.VERSION }}
             ghcr.io/parente/cfsync:latest
 
-      - name: Configure git
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-
       - name: Release helm chart to GitHub Pages
         uses: stefanprodan/helm-gh-pages@v1.2.0
         with:
