@@ -1,0 +1,8 @@
+apiVersion: v2
+name: cfsync
+description: |
+  Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
+  Useful for local, homelab k8s setups.
+type: application
+version: 0.1.0
+appVersion: 0.1.0

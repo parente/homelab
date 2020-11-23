@@ -1,0 +1,85 @@
+repositories:
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+  - name: kubernetes-incubator
+    url: https://charts.helm.sh/incubator
+
+environments:
+  default:
+    values:
+      - values.yaml
+    secrets:
+      - secrets.yaml
+
+releases:
+  # Install Cloudflare origin pull certificate to allow nginx to auth traffic coming from CF only
+  - name: cf-origin-pull-cert
+    namespace: ingress-nginx
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    atomic: true
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: cloudflare-origin-pull-certificate
+            data:
+              origin-pull-ca.pem: {{.Values.cloudflareOriginPullCert | b64enc}}
+  # Install nginx ingress controller with the Cloudflare origin pull certificate
+  - name: ingress-nginx
+    namespace: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    version: 3.4.0
+    atomic: true
+    needs:
+      - ingress-nginx/cf-origin-pull-cert
+    values:
+      - controller:
+          replicaCount: 2
+          extraVolumes:
+            - name: cloudflare-origin-pull-certificate
+              secret:
+                secretName: cloudflare-origin-pull-certificate
+          extraVolumeMounts:
+            - name: cloudflare-origin-pull-certificate
+              mountPath: /var/lib/certificates/cloudflare
+          config:
+            server-snippet: |
+              ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
+              ssl_verify_client on;
+  # Install process that will Cloudflare DNS records pointing to the cluster loadbalancer IP
+  - name: cfsync
+    namespace: cfsync
+    chart: ./.dist/cfsync
+    version: 0.1.0
+    atomic: true
+    values:
+      - cloudflareApiKey: {{.Values.cloudflareApiKey}}
+        cloudflareZoneId: {{.Values.cloudflareZoneId}}
+        cloudflareRootDomain: {{.Values.cloudflareRootDomain}}
+        resources:
+          limits:
+            cpu: 100m
+            memory: 32Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+  # Install the Cloudflare origin certificate in namespaces that will run apps proxied by Cloudflare
+{{- range .Values.cloudflareOriginCertNamespaces}}
+  - name: {{ . }}-cf-origin-cert
+    namespace: {{ . }}
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    atomic: true
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: {{$.Values.cloudflareRootDomain | replace "." "-"}}
+            type: kubernetes.io/tls
+            data:
+              tls.crt: {{$.Values.cloudflareOriginCert | b64enc}}
+              tls.key: {{$.Values.cloudflareOriginKey | b64enc}}
+{{- end}}

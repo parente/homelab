@@ -1,0 +1,44 @@
+name: Release cfsync
+
+on:
+  create:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get the tag as version number
+        id: get_version
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./cfsync
+          file: ./cfsync/Dockerfile
+          push: true
+          platforms: linux/386
+          tags: |
+            ghcr.io/parente/cfsync:${{ steps.get_version.outputs.VERSION }}
+            ghcr.io/parente/cfsync:latest
+
+      - name: Configure git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Release helm chart to GitHub Pages
+        uses: helm/chart-releaser-action@v1.1.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
