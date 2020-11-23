@@ -18,5 +18,5 @@ import: ## Build and import the local cfsync docker image for testing
 	@make -C cfsync image
 	@k3d image import ghcr.io/parente/cfsync:latest -c k3dlab
 
-sync: chart ## Sync helmfile with the cluster
+sync: ## Sync helmfile with the cluster
 	@helmfile sync
