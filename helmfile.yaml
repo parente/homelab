@@ -3,6 +3,8 @@ repositories:
     url: https://kubernetes.github.io/ingress-nginx
   - name: kubernetes-incubator
     url: https://charts.helm.sh/incubator
+  - name: k3dlab
+    url: https://parente.github.io/k3dlab
 
 environments:
   default:
@@ -51,8 +53,8 @@ releases:
   # Install process that will Cloudflare DNS records pointing to the cluster loadbalancer IP
   - name: cfsync
     namespace: cfsync
-    chart: ./.dist/cfsync
-    version: 0.1.0
+    chart: k3dlab/cfsync
+    version: 0.1.1
     atomic: true
     values:
       - cloudflareApiKey: {{.Values.cloudflareApiKey}}
