@@ -1,7 +1,7 @@
 name: Release webapp
 
 on:
-  create:
+  push:
     tags:
       - "webapp-*"
 

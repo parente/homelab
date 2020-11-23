@@ -1,7 +1,7 @@
 name: Release cfsync
 
 on:
-  create:
+  push:
     tags:
       - "cfsync-*"
 
