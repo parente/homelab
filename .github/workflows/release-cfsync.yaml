@@ -46,4 +46,4 @@ jobs:
         uses: stefanprodan/helm-gh-pages@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          charts_dir: cfsync/chart
+          charts_dir: cfsync
