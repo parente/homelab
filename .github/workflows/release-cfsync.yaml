@@ -34,7 +34,7 @@ jobs:
           push: true
           platforms: linux/386
           tags: |
-            ghcr.io/parente/cfsync:${{ steps.get_version.outputs.VERSION }}
+            ghcr.io/parente/cfsync:${{ steps.get_version.outputs.version }}
             ghcr.io/parente/cfsync:latest
 
       - name: Release helm chart to GitHub Pages
