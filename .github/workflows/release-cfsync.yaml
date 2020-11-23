@@ -39,8 +39,8 @@ jobs:
 
       - name: Configure git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Release helm chart to GitHub Pages
         uses: stefanprodan/helm-gh-pages@@v1.2.0
