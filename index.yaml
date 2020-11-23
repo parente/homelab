@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  cfsync:
+  - apiVersion: v2
+    appVersion: 0.1.3
+    created: "2020-11-23T02:35:49.541337518Z"
+    description: |
+      Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
+      Useful for local, homelab k8s setups.
+    digest: 92a611618e023e79dd0c0d3e208c0ccb8bb0988bd61b374ef844949fbebb0dc0
+    name: cfsync
+    type: application
+    urls:
+    - https://parente.github.io/k3dlab/cfsync-0.1.3.tgz
+    version: 0.1.3
+generated: "2020-11-23T02:35:49.540736904Z"
