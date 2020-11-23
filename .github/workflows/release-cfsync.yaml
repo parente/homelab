@@ -43,6 +43,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Release helm chart to GitHub Pages
-        uses: helm/chart-releaser-action@v1.1.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        uses: stefanprodan/helm-gh-pages@@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          charts_dir: cfsync/chart
