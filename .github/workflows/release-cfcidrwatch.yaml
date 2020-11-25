@@ -1,9 +1,9 @@
-name: Release cfsync
+name: Release cfcidrwatch
 
 on:
   push:
     tags:
-      - "cfsync-*"
+      - "cfcidrwatch-*"
 
 jobs:
   release:
@@ -14,7 +14,7 @@ jobs:
 
       - name: Get the tag as version number
         id: get_version
-        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/cfsync-}
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/cfcidrwatch-}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -29,16 +29,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build and push cfsync docker image
+      - name: Build and push cfcidrwatch docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./cfsync
-          file: ./cfsync/Dockerfile
+          context: ./cfcidrwatch
+          file: ./cfcidrwatch/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm/v7
           tags: |
-            ghcr.io/parente/cfsync:${{ steps.get_version.outputs.version }}
-            ghcr.io/parente/cfsync:latest
+            ghcr.io/parente/cfcidrwatch:${{ steps.get_version.outputs.version }}
+            ghcr.io/parente/cfcidrwatch:latest
 
       - name: Release helm charts to GitHub Pages
         uses: stefanprodan/helm-gh-pages@v1.2.0
