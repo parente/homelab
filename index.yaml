@@ -3,11 +3,11 @@ entries:
   cfsync:
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-11-25T05:55:02.170335712Z"
+    created: "2020-11-25T20:11:06.023299957Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
-    digest: 0a570c958d20e2576bf3c10fce2625d435e392f7393ffa46ca0d2f16c7d0902d
+    digest: 470a1bb29efdb82b372ec39bb292f783ed55547482532f1cc0f27445ae6887bb
     name: cfsync
     type: application
     urls:
@@ -15,7 +15,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2020-11-25T05:55:02.169485457Z"
+    created: "2020-11-25T20:11:06.022872155Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -28,7 +28,7 @@ entries:
   webapp:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-25T05:55:02.170900649Z"
+    created: "2020-11-25T20:11:06.02376956Z"
     description: Creates a deployment, service, and ingress for a stateless web app
     digest: d1e709456d0dbfa0e599362d1406a4978167084469f61107c583bd8bba4a265c
     name: webapp
@@ -36,4 +36,15 @@ entries:
     urls:
     - https://parente.github.io/k3dlab/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2020-11-25T05:55:02.168610801Z"
+  whoami:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2020-11-25T20:11:06.024096162Z"
+    description: Deploys the traefik/whoami app for cluster ingress testing
+    digest: 31f4643b4a541c30510a33826945ae3b9b6956bd919ef1a49287c231581209b5
+    name: whoami
+    type: application
+    urls:
+    - https://parente.github.io/k3dlab/whoami-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-11-25T20:11:06.021762449Z"
