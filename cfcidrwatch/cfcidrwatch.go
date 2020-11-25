@@ -1,3 +1,12 @@
+// Command cfcidrwatch polls the Cloudflare IPs API to determine if the list if Cloudflare CIDR
+// blocks has changed since last poll. If it has, the command sends a Pushover notification to the
+// configured group key.
+//
+// The command requires the following environment variables to function properly:
+//
+// PUSHOVER_APP_KEY: Pushover unique application key
+// PUSHOVER_GROUP_KEY: Pushover group to notify
+// STATE_FILE: Local file path where the last seen etag is stored for comparison
 package main
 
 import (
@@ -31,6 +40,10 @@ func main() {
 	appKey := os.Getenv("PUSHOVER_APP_KEY")
 	groupKey := os.Getenv("PUSHOVER_GROUP_KEY")
 	stateFile := os.Getenv("STATE_FILE")
+
+	if appKey == "" || groupKey == "" || stateFile == "" {
+		log.Fatal("Missing one or more required env vars")
+	}
 
 	// Create a new pushover app with a token
 	app := pushover.New(appKey)
