@@ -26,10 +26,11 @@ In Cloudflare:
 
 In GitHub:
 
-- Created a `GHCR_TOKEN` secret with a personal access token having package write permission
+- Create a `GHCR_TOKEN` secret with a personal access token having package write permission
+- Create the `gh-pages` orphan branch
 
-## How do I cut a release of the cfsync chart?
+## How do I cut chart releases?
 
 1. Bump versions in `cfsync/chart/Chart.yaml` and `helmfile.yaml`.
 2. Push to main.
-3. Use the GitHub web UI to create a release with match version tag.
+3. Use the GitHub web UI to create a release with matching version tag.
