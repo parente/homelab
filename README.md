@@ -29,6 +29,14 @@ In GitHub:
 - Create a `GHCR_TOKEN` secret with a personal access token having package write permission
 - Create the `gh-pages` orphan branch
 
+To run on a single Raspberry Pi 3 (ARMv7):
+
+- Install k3d onto the Pi
+- Clone this project onto the Pi
+- Run make cluster
+- Copy the ~/.kube/config back to my main machine
+- Run make sync from the main machine
+
 ## How do I cut chart releases?
 
 1. Bump versions in `cfsync/chart/Chart.yaml` and `helmfile.yaml`.
