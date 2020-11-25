@@ -1,0 +1,6 @@
+apiVersion: v2
+name: whoami
+description: Deploys the traefik/whoami app for cluster ingress testing
+type: application
+version: 0.1.0
+appVersion: 0.1.0

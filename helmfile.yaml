@@ -85,21 +85,15 @@ releases:
             data:
               tls.crt: {{$.Values.cloudflareOriginCert | b64enc}}
               tls.key: {{$.Values.cloudflareOriginKey | b64enc}}
-  {{- end}}
+  {{- end }}
   # Install the whoami app to test ingress
   - name: whoami
     namespace: default
-    chart: k3dlab/webapp
+    chart: k3dlab/whoami
     version: 0.1.0
     atomic: true
     values:
-      - image:
-          repository: traefik/whoami
-          tag: latest
-        ingress:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: nginx
+      - ingress:
           hosts:
             - host: "whoami.{{ .Values.cloudflareRootDomain }}"
               paths: ['/']

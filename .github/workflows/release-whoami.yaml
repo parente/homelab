@@ -1,0 +1,19 @@
+name: Release whoami
+
+on:
+  push:
+    tags:
+      - "whoami-*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Release helm charts to GitHub Pages
+        uses: stefanprodan/helm-gh-pages@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          charts_dir: charts
