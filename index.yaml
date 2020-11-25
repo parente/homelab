@@ -3,19 +3,19 @@ entries:
   cfsync:
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-11-25T20:11:06.023299957Z"
+    created: "2020-11-25T20:20:40.575528666Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
-    digest: 470a1bb29efdb82b372ec39bb292f783ed55547482532f1cc0f27445ae6887bb
+    digest: 439b0de3ddbcecd95bc4b504c07a9605e7645d0a3db8b18c14b3c09496834497
     name: cfsync
     type: application
     urls:
-    - https://parente.github.io/k3dlab/cfsync-0.2.0.tgz
+    - https://parente.github.io/homelab/cfsync-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2020-11-25T20:11:06.022872155Z"
+    created: "2020-11-25T20:20:40.575055665Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -23,28 +23,28 @@ entries:
     name: cfsync
     type: application
     urls:
-    - https://parente.github.io/k3dlab/cfsync-0.1.3.tgz
+    - https://parente.github.io/homelab/cfsync-0.1.3.tgz
     version: 0.1.3
   webapp:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-25T20:11:06.02376956Z"
+    created: "2020-11-25T20:20:40.576267267Z"
     description: Creates a deployment, service, and ingress for a stateless web app
     digest: d1e709456d0dbfa0e599362d1406a4978167084469f61107c583bd8bba4a265c
     name: webapp
     type: application
     urls:
-    - https://parente.github.io/k3dlab/webapp-0.1.0.tgz
+    - https://parente.github.io/homelab/webapp-0.1.0.tgz
     version: 0.1.0
   whoami:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-25T20:11:06.024096162Z"
+    created: "2020-11-25T20:20:40.576548568Z"
     description: Deploys the traefik/whoami app for cluster ingress testing
-    digest: 31f4643b4a541c30510a33826945ae3b9b6956bd919ef1a49287c231581209b5
+    digest: d966c3330181fae52f4ae08e36c189b74d605f82e50baee83d056b5e32523c62
     name: whoami
     type: application
     urls:
-    - https://parente.github.io/k3dlab/whoami-0.1.0.tgz
+    - https://parente.github.io/homelab/whoami-0.1.0.tgz
     version: 0.1.0
-generated: "2020-11-25T20:11:06.021762449Z"
+generated: "2020-11-25T20:20:40.574537064Z"
