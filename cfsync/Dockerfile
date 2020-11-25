@@ -1,4 +1,4 @@
-FROM python:3
+FROM --platform=$TARGETPLATFORM python:3.9
 
 LABEL org.opencontainers.image.source https://github.com/parente/k3dlab
 
