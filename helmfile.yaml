@@ -54,7 +54,7 @@ releases:
   - name: cfsync
     namespace: cfsync
     chart: k3dlab/cfsync
-    version: 0.1.3
+    version: 0.2.0
     atomic: true
     values:
       - cloudflareApiKey: {{.Values.cloudflareApiKey}}
