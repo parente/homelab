@@ -1,4 +1,4 @@
-module github.com/parente/cfcidrwatch
+module github.com/parente/homelab/cfcidrwatch
 
 go 1.13
 
