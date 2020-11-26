@@ -10,6 +10,9 @@ builder: ## Create a dockerx docker-container build for multi-arch build + push
 clean: ## Clean up the workspace
 	@rm -rf .venv
 
+get: ## Install dependencies
+	@go get -d -v
+
 image: ## Build a local docker image
 	@DOCKER_BUILDKIT=1 docker buildx build --load --tag cfsync:latest .
 
@@ -18,6 +21,9 @@ imagex: ## Make multi-arch platform images and push to GHCR as latest
 		--push \
 		--platform linux/amd64,linux/arm/v7 \
 		--tag ghcr.io/parente/cfsync:latest .
+
+run: ## Build and run locally
+	@go run ./cfsync.go
 
 venv: ## Build a local dev virtualenv
 	@python3 -m venv .venv
