@@ -12,6 +12,6 @@ ARG TARGETOS
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /go/bin/cfcidrwatch
 
 FROM scratch AS bin
-LABEL org.opencontainers.image.source https://github.com/parente/cfcidrwatch
+LABEL org.opencontainers.image.source https://github.com/parente/homelab
 COPY --from=builder /go/bin/cfcidrwatch /go/bin/cfcidrwatch
 ENTRYPOINT ["/go/bin/cfcidrwatch"]
