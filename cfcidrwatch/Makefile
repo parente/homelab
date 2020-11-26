@@ -11,7 +11,6 @@ get: ## Install dependencies
 	@go get -d -v
 
 image: ## Build a local docker image
-	#@@docker build --rm -t cfcidrwatch .
 	@DOCKER_BUILDKIT=1 docker buildx build --load --tag cfcidrwatch:latest .
 
 imagex: ## Make multi-arch platform images and push to GHCR as latest
