@@ -1,0 +1,8 @@
+apiVersion: v2
+name: cfcidrwatch
+description: |
+  Deploys the cfcidrwatch app which watches for Cloudflare CIDR block changes and notifies a 
+  Pushover group when there is a change.
+type: application
+version: 0.1.0
+appVersion: 0.1.0

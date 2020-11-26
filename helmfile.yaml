@@ -101,3 +101,22 @@ releases:
             - secretName: {{ $cloudflareOriginCertSecret }}
               hosts:
                 - "whoami.{{ .Values.cloudflareRootDomain }}"
+  # Install the cfcidrwatch app
+  - name: cfcidrwatch
+    namespace: default
+    chart: homelab/cfcidrwatch
+    version: 0.1.0
+    atomic: true
+    values:
+      - image:
+          tag: 0.1.0
+        env:
+          pushoverAppKey: {{ .Values.pushoverAppKey }}
+          pushoverGroupKey: {{ .Values.pushoverGroupKey }}
+        resources:
+          limits:
+            cpu: 100m
+            memory: 8Mi
+          requests:
+            cpu: 100m
+            memory: 8Mi
