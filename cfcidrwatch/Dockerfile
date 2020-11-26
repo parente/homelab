@@ -14,4 +14,5 @@ RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /go/bin/cfcidrwatch
 FROM scratch AS bin
 LABEL org.opencontainers.image.source https://github.com/parente/homelab
 COPY --from=builder /go/bin/cfcidrwatch /go/bin/cfcidrwatch
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 ENTRYPOINT ["/go/bin/cfcidrwatch"]
