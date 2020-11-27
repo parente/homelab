@@ -50,23 +50,6 @@ releases:
             server-snippet: |
               ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
               ssl_verify_client on;
-  # Install process that will Cloudflare DNS records pointing to the cluster loadbalancer IP
-  - name: cfsync
-    namespace: cfsync
-    chart: homelab/cfsync
-    version: 0.2.0
-    atomic: true
-    values:
-      - cloudflareApiKey: {{.Values.cloudflareApiKey}}
-        cloudflareZoneId: {{.Values.cloudflareZoneId}}
-        cloudflareRootDomain: {{.Values.cloudflareRootDomain}}
-        resources:
-          limits:
-            cpu: 100m
-            memory: 32Mi
-          requests:
-            cpu: 100m
-            memory: 32Mi
   # Install the Cloudflare origin certificate in namespaces that will run apps proxied by Cloudflare
   {{- $cloudflareOriginCertSecret := .Values.cloudflareRootDomain | replace "." "-" -}}
   {{- range .Values.cloudflareOriginCertNamespaces}}
@@ -92,6 +75,7 @@ releases:
     chart: homelab/whoami
     version: 0.1.0
     atomic: true
+    installed: true
     values:
       - ingress:
           hosts:
@@ -101,18 +85,37 @@ releases:
             - secretName: {{ $cloudflareOriginCertSecret }}
               hosts:
                 - "whoami.{{ .Values.cloudflareRootDomain }}"
-  # Install the cfcidrwatch app
+  # Install the cfsync app that updates Cloudflare DNS records pointing to the cluster load balancer
+  # public IPv4 address
+  - name: cfsync
+    namespace: cfsync
+    chart: homelab/cfsync
+    version: 0.3.0
+    atomic: true
+    installed: true
+    values:
+      - env:
+          CF_API_TOKEN: {{.Values.cloudflareApiToken}}
+          CF_ZONE_ID: {{.Values.cloudflareZoneId}}
+          CF_ROOT_DOMAIN: {{.Values.cloudflareRootDomain}}
+        resources:
+          limits:
+            cpu: 100m
+            memory: 8Mi
+          requests:
+            cpu: 100m
+            memory: 8Mi
+  # Install the cfcidrwatch app to monitor for Cloudflare CIDR block changes and notify via Pushover
   - name: cfcidrwatch
     namespace: default
     chart: homelab/cfcidrwatch
-    version: 0.1.0
+    version: 0.2.0
     atomic: true
+    installed: true
     values:
-      - image:
-          tag: 0.1.0
-        env:
-          pushoverAppKey: {{ .Values.pushoverAppKey }}
-          pushoverGroupKey: {{ .Values.pushoverGroupKey }}
+      - env:
+          PUSHOVER_APP_KEY: {{ .Values.pushoverAppKey }}
+          PUSHOVER_GROUP_KEY: {{ .Values.pushoverGroupKey }}
         resources:
           limits:
             cpu: 100m
