@@ -3,8 +3,10 @@ replicaCount: 1
 image:
   repository: ghcr.io/parente/cfcidrwatch
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: ""
 
 env:
-  pushoverAppKey: ""
-  pushoverGroupKey: ""
+  PUSHOVER_APP_KEY: ""
+  PUSHOVER_GROUP_KEY: ""
+
+resources: {}

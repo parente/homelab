@@ -21,9 +21,9 @@ spec:
               mountPath: /data
           env:
             - name: PUSHOVER_APP_KEY
-              value: {{.Values.env.pushoverAppKey}}
+              value: {{.Values.env.PUSHOVER_APP_KEY}}
             - name: PUSHOVER_GROUP_KEY
-              value: {{.Values.env.pushoverGroupKey}}
+              value: {{.Values.env.PUSHOVER_GROUP_KEY}}
             - name: STATE_FILE
               value: /data/etag
       volumes:
