@@ -1,9 +1,18 @@
-FROM --platform=$TARGETPLATFORM python:3.9
+FROM --platform=$BUILDPLATFORM golang:alpine AS builder
+WORKDIR /src
+ENV CGO_ENABLED=0
 
+COPY go.* .
+RUN go mod download
+COPY *.go .
+
+ARG TARGETARCH
+ARG TARGETOS
+
+RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /go/bin/cfsync
+
+FROM scratch AS bin
 LABEL org.opencontainers.image.source https://github.com/parente/homelab
-
-COPY requirements.txt /usr/local/src/
-RUN pip install --no-cache-dir -r /usr/local/src/requirements.txt
-COPY cfsync.py /usr/local/src/
-USER nobody
-CMD ["python", "/usr/local/src/cfsync.py"]
+COPY --from=builder /go/bin/cfsync /go/bin/cfsync
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+ENTRYPOINT ["/go/bin/cfsync"]

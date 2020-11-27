@@ -24,7 +24,3 @@ imagex: ## Make multi-arch platform images and push to GHCR as latest
 
 run: ## Build and run locally
 	@go run ./cfsync.go
-
-venv: ## Build a local dev virtualenv
-	@python3 -m venv .venv
-	@. .venv/bin/activate && pip install -r requirements.txt
