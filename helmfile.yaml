@@ -28,6 +28,22 @@ releases:
               name: cloudflare-origin-pull-certificate
             data:
               origin-pull-ca.pem: {{.Values.cloudflareOriginPullCert | b64enc}}
+  # Install the wildcard origin certificate and key to encrypt traffic between Cloudflare and nginx
+  - name: cf-origin-cert
+    namespace: ingress-nginx
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    atomic: true
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: cloudflare-origin-certificate
+            type: kubernetes.io/tls
+            data:
+              tls.crt: {{.Values.cloudflareOriginCert | b64enc}}
+              tls.key: {{.Values.cloudflareOriginKey | b64enc}}
   # Install nginx ingress controller with the Cloudflare origin pull certificate
   - name: ingress-nginx
     namespace: ingress-nginx
@@ -36,9 +52,12 @@ releases:
     atomic: true
     needs:
       - ingress-nginx/cf-origin-pull-cert
+      - ingress-nginx/cf-origin-cert
     values:
       - controller:
           replicaCount: 2
+          extraArgs:
+            default-ssl-certificate: ingress-nginx/cloudflare-origin-certificate
           extraVolumes:
             - name: cloudflare-origin-pull-certificate
               secret:
@@ -50,25 +69,6 @@ releases:
             server-snippet: |
               ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
               ssl_verify_client on;
-  # Install the Cloudflare origin certificate in namespaces that will run apps proxied by Cloudflare
-  {{- $cloudflareOriginCertSecret := .Values.cloudflareRootDomain | replace "." "-" -}}
-  {{- range .Values.cloudflareOriginCertNamespaces}}
-  - name: {{ . }}-cf-origin-cert
-    namespace: {{ . }}
-    chart: kubernetes-incubator/raw
-    version: 0.2.3
-    atomic: true
-    values:
-      - resources:
-          - apiVersion: v1
-            kind: Secret
-            metadata:
-              name: {{$cloudflareOriginCertSecret}}
-            type: kubernetes.io/tls
-            data:
-              tls.crt: {{$.Values.cloudflareOriginCert | b64enc}}
-              tls.key: {{$.Values.cloudflareOriginKey | b64enc}}
-  {{- end }}
   # Install the whoami app to test ingress
   - name: whoami
     namespace: default
@@ -80,11 +80,9 @@ releases:
       - ingress:
           hosts:
             - host: "whoami.{{ .Values.cloudflareRootDomain }}"
-              paths: ['/']
+              paths: ["/"]
           tls:
-            - secretName: {{ $cloudflareOriginCertSecret }}
-              hosts:
-                - "whoami.{{ .Values.cloudflareRootDomain }}"
+            - hosts: ["whoami.{{ .Values.cloudflareRootDomain }}"]
   # Install the cfsync app that updates Cloudflare DNS records pointing to the cluster load balancer
   # public IPv4 address
   - name: cfsync
@@ -114,8 +112,8 @@ releases:
     installed: true
     values:
       - env:
-          PUSHOVER_APP_KEY: {{ .Values.pushoverAppKey }}
-          PUSHOVER_GROUP_KEY: {{ .Values.pushoverGroupKey }}
+          PUSHOVER_APP_KEY: {{.Values.pushoverAppKey}}
+          PUSHOVER_GROUP_KEY: {{.Values.pushoverGroupKey}}
         resources:
           limits:
             cpu: 100m

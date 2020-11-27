@@ -68,8 +68,3 @@ cloudflareOriginPullCert: |
   AnOzKgZk4RzZPNAxCXERVxajn/FLcOhglVAKo5H0ac+AitlQ0ip55D2/mf8o72tM
   fVQ6VpyjEXdiIXWUq/o=
   -----END CERTIFICATE-----
-
-# Deploy the Cloudflare origin certificate to these namespaces where apps accepting traffic from CF
-# will run.
-cloudflareOriginCertNamespaces:
-  - default
