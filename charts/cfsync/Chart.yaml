@@ -4,5 +4,5 @@ description: |
   Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
   Useful for local, homelab k8s setups.
 type: application
-version: 0.2.0
-appVersion: 0.2.0
+version: 0.3.0
+appVersion: 0.3.0

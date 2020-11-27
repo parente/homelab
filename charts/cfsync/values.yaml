@@ -1,34 +1,13 @@
+replicaCount: 1
+
 image:
   repository: ghcr.io/parente/cfsync
   pullPolicy: IfNotPresent
   tag: ""
 
-replicaCount: 1
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  create: true
-  annotations: {}
-  name: ""
-
-env: []
-
-podAnnotations: {}
-
-podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-
-securityContext:
-  readOnlyRootFilesystem: true
+env:
+  CF_API_TOKEN: ""
+  CF_ZONE_ID: ""
+  CF_ROOT_DOMAIN: ""
 
 resources: {}
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
