@@ -84,7 +84,7 @@ func ingressHosts(api *kubernetes.Clientset, predicate func(string) bool) *map[s
 }
 
 // dnsRecords gets the set of Cloudflare A records in the zone.
-func dnsRecords(cf *cloudflare.API, zoneID string) *map[string]*cloudflare.DNSRecord {
+func dnsRecords(cf *cloudflare.API, zoneID string) *map[string]cloudflare.DNSRecord {
 	records, err := cf.DNSRecords(zoneID, cloudflare.DNSRecord{
 		Type: "A",
 	})
@@ -92,9 +92,9 @@ func dnsRecords(cf *cloudflare.API, zoneID string) *map[string]*cloudflare.DNSRe
 		log.Println(err)
 	}
 
-	recordMap := make(map[string]*cloudflare.DNSRecord)
+	recordMap := make(map[string]cloudflare.DNSRecord)
 	for _, record := range records {
-		recordMap[record.Name] = &record
+		recordMap[record.Name] = record
 	}
 
 	return &recordMap
@@ -107,14 +107,18 @@ func syncRecords(
 	ip string,
 	zoneID string,
 	hosts *map[string]bool,
-	records *map[string]*cloudflare.DNSRecord,
+	records *map[string]cloudflare.DNSRecord,
 ) {
 	for host, record := range *records {
 		if _, ok := (*hosts)[host]; !ok {
 			err := cf.DeleteDNSRecord(record.ZoneID, record.ID)
 			if err != nil {
 				log.Println(fmt.Sprintf("Failed to delete %s: %s", host, err))
+			} else {
+				delete(*hosts, host)
+				log.Println(fmt.Sprintf("Deleted record %s", host))
 			}
+
 		} else if record.Content != ip {
 			err := cf.UpdateDNSRecord(record.ZoneID, record.ID, cloudflare.DNSRecord{
 				Name:    host,
@@ -124,18 +128,25 @@ func syncRecords(
 			})
 			if err != nil {
 				log.Println(fmt.Sprintf("Failed to update %s: %s", host, err))
+			} else {
+				log.Println(fmt.Sprintf("Updated record: %s", host))
 			}
 		}
 	}
 
 	for host := range *hosts {
 		if _, ok := (*records)[host]; !ok {
-			cf.CreateDNSRecord(zoneID, cloudflare.DNSRecord{
+			_, err := cf.CreateDNSRecord(zoneID, cloudflare.DNSRecord{
 				Name:    host,
 				Content: ip,
 				Type:    "A",
 				Proxied: true,
 			})
+			if err != nil {
+				log.Println(fmt.Sprintf("Failed to create %s: %s", host, err))
+			} else {
+				log.Println(fmt.Sprintf("Created record: %s", host))
+			}
 		}
 	}
 }
@@ -218,7 +229,7 @@ func main() {
 			})
 			log.Println(fmt.Sprintf("Ingress hosts: %v", hosts))
 			records := dnsRecords(cf, cfZoneID)
-			log.Println(fmt.Sprintf("A records: %v", records))
+			log.Println(fmt.Sprintf("A records: %d", len(*records)))
 			syncRecords(cf, pip.Get(), cfZoneID, hosts, records)
 			log.Println("Completed sync")
 			time.Sleep(syncInterval)
