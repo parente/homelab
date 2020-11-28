@@ -208,7 +208,7 @@ releases:
   - name: cfsync
     namespace: cfsync
     chart: homelab/cfsync
-    version: 0.3.0
+    version: 0.3.1
     atomic: true
     installed: true
     values:
