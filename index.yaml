@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   cfcidrwatch:
   - apiVersion: v2
+    appVersion: 0.2.1
+    created: "2020-11-28T17:05:38.013051585Z"
+    description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
+      changes and notifies a \nPushover group when there is a change.\n"
+    digest: 8d5b9fa516c480f54c7cd6bc35b28afa7de308e2dccda19bfa4b6a25f1fc27d5
+    name: cfcidrwatch
+    type: application
+    urls:
+    - https://parente.github.io/homelab/cfcidrwatch-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-11-27T04:28:08.681994407Z"
+    created: "2020-11-28T17:05:38.012747384Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: a3782fbbb7a4b368421207b489ba4794e7f7a0697f8f3c7d80f13fe694913ea0
@@ -14,7 +25,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-27T04:28:08.681499401Z"
+    created: "2020-11-28T17:05:38.012432984Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: f35de7061f5e2a204fd50f32009be52f1b3b9837e551bbd30a702ea8194d9947
@@ -26,11 +37,11 @@ entries:
   cfsync:
   - apiVersion: v2
     appVersion: 0.3.0
-    created: "2020-11-27T04:28:08.683193119Z"
+    created: "2020-11-28T17:05:38.014239287Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
-    digest: ffa992fbe38a5444bac33aa89f23c84d9c5d1a8f6afabab01acd98ec9a5539e7
+    digest: 8609c895e23c0ae9b371a349a7acb790744157de5cebe0a7c2226a8ad919c815
     name: cfsync
     type: application
     urls:
@@ -38,7 +49,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-11-27T04:28:08.682846316Z"
+    created: "2020-11-28T17:05:38.013899087Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -50,7 +61,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2020-11-27T04:28:08.682460312Z"
+    created: "2020-11-28T17:05:38.013430186Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -63,7 +74,7 @@ entries:
   webapp:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-27T04:28:08.683681825Z"
+    created: "2020-11-28T17:05:38.014660388Z"
     description: Creates a deployment, service, and ingress for a stateless web app
     digest: d1e709456d0dbfa0e599362d1406a4978167084469f61107c583bd8bba4a265c
     name: webapp
@@ -74,12 +85,12 @@ entries:
   whoami:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-27T04:28:08.683980228Z"
+    created: "2020-11-28T17:05:38.014954589Z"
     description: Deploys the traefik/whoami app for cluster ingress testing
-    digest: 5c7515615fdd7a8702e08db7015bf0b16937bfc02afb4f8b510b2e2e46975165
+    digest: 162d6a5172af8710056ccbacd2711588e4f9bf65015ccb28021bcd1476802462
     name: whoami
     type: application
     urls:
     - https://parente.github.io/homelab/whoami-0.1.0.tgz
     version: 0.1.0
-generated: "2020-11-27T04:28:08.681019196Z"
+generated: "2020-11-28T17:05:38.011894483Z"
