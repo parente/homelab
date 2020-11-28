@@ -1,4 +1,4 @@
-.PHONY: help apply clean cluster diff sync
+.PHONY: help apply clean cluster diff edit-secrets sync
 
 SHARED_VOLUME?=${HOME}/docker/homelab
 

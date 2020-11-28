@@ -7,6 +7,8 @@ My setup for a homelab kubernetes environment with:
 - nginx ingress with TLS termination using static Cloudflare origin certs and origin pull
   verification
 - cfsync for maintaining A record public IP entries for a NATed home network
+- minio for object storage
+- other apps of interest
 
 ## Why build it?
 
@@ -34,8 +36,13 @@ To run on a single Raspberry Pi 3 (ARMv7):
 - Install k3d onto the Pi
 - Clone this project onto the Pi
 - Run make cluster
-- Copy the ~/.kube/config back to my main machine
-- Run make sync from the main machine
+- Copy the `~/.kube/config` back to my main machine
+- Run `make sync` from the main machine
+
+To use the minio `mc` CLI:
+
+- Add a `homelab` alias to the `~/.mc/config.json` file
+- Run make in the minio folder
 
 ## How do I cut chart releases?
 
