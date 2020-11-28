@@ -112,6 +112,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
+			etag = []byte(ips.Result.Etag)
 		} else if !ips.Success {
 			log.Println(fmt.Sprintf("Failed to call Cloudflare API: %v", ips.Errors))
 			_, err := app.SendMessage(errMessage, recipient)
@@ -131,6 +132,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
+			etag = []byte(ips.Result.Etag)
 		}
 
 		log.Println("Completed API check")
