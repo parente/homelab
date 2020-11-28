@@ -13,10 +13,9 @@ buckets: ## Create public minio static site buckets
 	@mc mb -p homelab/home/peter
 
 users: ## Create minio users with personal buckets
-	@mc admin user add juliana
-	@mc admin user add peter
+	mc admin user add homelab juliana
 	@mc admin group add homelab family juliana
-	@mc admin policy add homelab homeowner ./minio/homeowner-policy.json
+	@mc admin policy add homelab homeowner ./homeowner-policy.json
 	@mc admin policy set homelab homeowner group=family
 
 www: ## Upload www assets

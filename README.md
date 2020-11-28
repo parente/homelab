@@ -37,6 +37,7 @@ To run on a single Raspberry Pi 3 (ARMv7):
 - Clone this project onto the Pi
 - Run make cluster
 - Copy the `~/.kube/config` back to my main machine
+- Delete the default `local-path` StorageClass (probably should skip install and install custom)
 - Run `make sync` from the main machine
 
 To use the minio `mc` CLI:
