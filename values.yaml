@@ -68,3 +68,17 @@ cloudflareOriginPullCert: |
   AnOzKgZk4RzZPNAxCXERVxajn/FLcOhglVAKo5H0ac+AitlQ0ip55D2/mf8o72tM
   fVQ6VpyjEXdiIXWUq/o=
   -----END CERTIFICATE-----
+
+minioStaticSites:
+  - name: root
+    host: parente.dev
+    bucketPrefix: /www
+  - name: www
+    host: www.parente.dev
+    bucketPrefix: /www
+  - name: juliana
+    host: juliana.parente.dev
+    bucketPrefix: /home/juliana
+  - name: peter
+    host: peter.parente.dev
+    bucketPrefix: /home/peter

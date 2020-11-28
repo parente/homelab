@@ -1,10 +1,12 @@
 repositories:
+  - name: homelab
+    url: https://parente.github.io/homelab
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
   - name: kubernetes-incubator
     url: https://charts.helm.sh/incubator
-  - name: homelab
-    url: https://parente.github.io/homelab
+  - name: minio
+    url: https://helm.min.io/
 
 environments:
   default:
@@ -44,6 +46,24 @@ releases:
             data:
               tls.crt: {{.Values.cloudflareOriginCert | b64enc}}
               tls.key: {{.Values.cloudflareOriginKey | b64enc}}
+  # Overwrite the default local-path-provisioner configuration with one that retains all volumes
+  - name: retained-local-path
+    namespace: kube-system
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    atomic: true
+    installed: true
+    values:
+      - resources:
+          - apiVersion: storage.k8s.io/v1
+            kind: StorageClass
+            metadata:
+              name: local-path
+              annotations:
+                storageclass.kubernetes.io/is-default-class: "true"
+            provisioner: rancher.io/local-path
+            volumeBindingMode: WaitForFirstConsumer
+            reclaimPolicy: Retain
   # Install nginx ingress controller with the Cloudflare origin pull certificate
   - name: ingress-nginx
     namespace: ingress-nginx
@@ -69,6 +89,106 @@ releases:
             server-snippet: |
               ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
               ssl_verify_client on;
+  # Create a PVC for minio separately so it's not affected by minio chart experimentation
+  - name: minio-pvc
+    namespace: minio
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    wait: false # local volume created on pod start, so don't wait and deadlock
+    needs:
+      - kube-system/retained-local-path
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: PersistentVolumeClaim
+            metadata:
+              name: minio-pvc
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              storageClassName: local-path
+              resources:
+                requests:
+                  storage: 10Gi
+  # Install minio object storage service
+  - name: minio
+    namespace: minio
+    chart: minio/minio
+    version: 8.0.5
+    atomic: true
+    installed: true
+    needs:
+      - minio/minio-pvc
+    values:
+      - accessKey: {{.Values.minioAccessKey}}
+        secretKey: {{.Values.minioSecretKey}}
+        environment:
+          MINIO_BROWSER: on
+        resources:
+          requests:
+            memory: 256Mi
+        persistence:
+          existingClaim: minio-pvc
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: nginx
+          hosts: ["minio.{{ .Values.cloudflareRootDomain }}"]
+  # Create ingresses for minio static site bucket prefixes
+  - name: minio-static-sites
+    namespace: minio
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    atomic: true
+    installed: true
+    values:
+      - resources:
+          {{- range .Values.minioStaticSites}}
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            metadata:
+              name: minio-{{.name}}-index
+              annotations:
+                kubernetes.io/ingress.class: nginx
+                nginx.ingress.kubernetes.io/use-regex: "true"
+                nginx.ingress.kubernetes.io/rewrite-target: {{.bucketPrefix}}/index.html
+            spec:
+              tls:
+                - hosts: ["{{.host}}"]
+              rules:
+                - host: "{{.host}}"
+                  http:
+                    paths:
+                      - path: /$
+                        pathType: Prefix
+                        backend:
+                          service:
+                            name: minio
+                            port:
+                              number: 9000
+          - apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            metadata:
+              name: minio-{{.name}}
+              annotations:
+                kubernetes.io/ingress.class: nginx
+                nginx.ingress.kubernetes.io/use-regex: "true"
+                nginx.ingress.kubernetes.io/rewrite-target: {{.bucketPrefix}}/$1
+            spec:
+              tls:
+                - hosts: ["{{.host}}"]
+              rules:
+                - host: "{{.host}}"
+                  http:
+                    paths:
+                      - path: /(.+)$
+                        pathType: Prefix
+                        backend:
+                          service:
+                            name: minio
+                            port:
+                              number: 9000
+          {{- end}}
   # Install the whoami app to test ingress
   - name: whoami
     namespace: default
@@ -110,6 +230,8 @@ releases:
     version: 0.2.0
     atomic: true
     installed: true
+    needs:
+      - kube-system/retained-local-path
     values:
       - env:
           PUSHOVER_APP_KEY: {{.Values.pushoverAppKey}}

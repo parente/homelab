@@ -24,5 +24,8 @@ cluster: ## Create a new cluster
 diff: ## Diff the helmfile with the cluster
 	@helmfile diff
 
+edit-secrets: ## Edit helm secrets in VSCode
+	@EDITOR="code --wait" helm secrets edit secrets.yaml
+
 sync: ## Sync the entire helmfile with the cluster
 	@helmfile sync
