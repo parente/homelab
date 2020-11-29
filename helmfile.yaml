@@ -89,27 +89,6 @@ releases:
             server-snippet: |
               ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
               ssl_verify_client on;
-  # Create a PVC for minio separately so it's not affected by minio chart experimentation
-  - name: minio-pvc
-    namespace: minio
-    chart: kubernetes-incubator/raw
-    version: 0.2.3
-    wait: false # local volume created on pod start, so don't wait and deadlock
-    needs:
-      - kube-system/retained-local-path
-    values:
-      - resources:
-          - apiVersion: v1
-            kind: PersistentVolumeClaim
-            metadata:
-              name: minio-pvc
-            spec:
-              accessModes:
-                - ReadWriteOnce
-              storageClassName: local-path
-              resources:
-                requests:
-                  storage: 10Gi
   # Install minio object storage service
   - name: minio
     namespace: minio
@@ -117,18 +96,18 @@ releases:
     version: 8.0.5
     atomic: true
     installed: true
-    needs:
-      - minio/minio-pvc
     values:
       - accessKey: {{.Values.minioAccessKey}}
         secretKey: {{.Values.minioSecretKey}}
+        mode: distributed
+        replicas: 4
         environment:
           MINIO_BROWSER: on
         resources:
           requests:
             memory: 256Mi
         persistence:
-          existingClaim: minio-pvc
+          size: 5Gi # per replica
         ingress:
           enabled: true
           annotations:
