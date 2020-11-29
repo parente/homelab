@@ -12,7 +12,35 @@ apply: ## Apply helmfile changes to the cluster
 clean: ## Destroy the cluster
 	@k3d cluster delete homelab
 
-cluster: ## Create a new cluster
+cluster: ## Create a multi-host, multi-node cluster
+	@k3sup install \
+		--ip 192.168.86.200 \
+		--user pi \
+		--ssh-key ~/.ssh/pacman \
+		--k3s-channel v1.19 \
+		--k3s-extra-args '--no-deploy traefik' \
+		--merge \
+		--context pacman
+	@k3sup join \
+		--ip 192.168.86.201 \
+		--server-ip 192.168.86.200 \
+		--user pi \
+		--ssh-key ~/.ssh/pacman \
+		--k3s-channel v1.19
+	@k3sup join \
+		--ip 192.168.86.202 \
+		--server-ip 192.168.86.200 \
+		--user pi \
+		--ssh-key ~/.ssh/pacman \
+		--k3s-channel v1.19
+
+diff: ## Diff the helmfile with the cluster
+	@helmfile diff
+
+edit-secrets: ## Edit helm secrets in VSCode
+	@EDITOR="code --wait" helm secrets edit secrets.yaml
+
+localhost-cluster: ## Create a single-host, multi-node cluster
 	@mkdir -p $(SHARED_VOLUME)
 	@k3d cluster create homelab \
 		-p "80:80@loadbalancer" \
@@ -20,12 +48,6 @@ cluster: ## Create a new cluster
 		--volume "$(SHARED_VOLUME):/var/lib/rancher/k3s/storage" \
 		--k3s-server-arg '--no-deploy=traefik' \
 		--agents 2
-
-diff: ## Diff the helmfile with the cluster
-	@helmfile diff
-
-edit-secrets: ## Edit helm secrets in VSCode
-	@EDITOR="code --wait" helm secrets edit secrets.yaml
 
 sync: ## Sync the entire helmfile with the cluster
 	@helmfile sync
