@@ -1,0 +1,10 @@
+[package]
+name = "justqr"
+version = "0.1.0"
+authors = ["Peter Parente <parente@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+actix-web = "3"
+actix-files = "0.4"
+qrcode = "0.12"
