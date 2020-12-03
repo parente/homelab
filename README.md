@@ -68,7 +68,7 @@ network={
 - Run `raspi-config` to set hostname, lower GPU memory, expand root partition
 - Add `cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory` to `/boot/cmdline.txt`
 - Disable wifi power saving with `sudo /sbin/iw wlan0 set power_save off` and permanently in
-  `/sbin/iw wlan0 set power_save off` before the exit
+  `/etc/rc.local` before the exit
 - Assign fixed IP
 - Repeat for all nodes
 - Install `k3sup` on my dev box
