@@ -28,7 +28,7 @@ cluster: ## Create a multi-host, multi-node cluster
 		--ssh-key ~/.ssh/pacman \
 		--k3s-channel v1.19
 	@k3sup join \
-		--ip 192.168.86.202 \
+		--ip 192.168.86.203 \
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
