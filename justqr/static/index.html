@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<meta charset="utf-8" />
 <html>
 
 <head>
+  <meta charset="utf-8" />
   <title>#justqr</title>
+  <script src="https://unpkg.com/htmx.org@1.0.0"></script>
+  <style>
+    body {
+      margin: 3em;
+    }
+
+    textarea {
+      width: 300px;
+      height: 150px;
+    }
+  </style>
 </head>
+
 <body>
   <h1>#justqr</h1>
-  <p>
-    <img src="/api/code" width="100" />
-  </p>
+  <p>Enter anything to encode in a QR code image.</p>
+  <form hx-post="/api/svg" hx-swap="innerHTML" hx-target="#qr">
+    <textarea name="content"></textarea>
+    <button>Submit</button>
+  </form>
+  <div id="qr"></div>
 </body>
 </html>

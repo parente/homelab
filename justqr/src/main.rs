@@ -1,14 +1,25 @@
 use actix_files::Files;
-use actix_web::{get, middleware, App, HttpResponse, HttpServer, Result};
+use actix_web::{middleware, post, web, App, HttpResponse, HttpServer, Result};
 use qrcode::render::svg;
 use qrcode::QrCode;
+use serde::Deserialize;
 
-#[get("/api/code")]
-async fn get_code() -> Result<HttpResponse> {
-    let svg = QrCode::new(b"https://app.zenhub.com/workspaces/toolsmiths-5e57d39702cc3e041fa62d72/issues/wearethorn/platform/766")
+#[derive(Deserialize)]
+struct CodeRequest {
+    content: String,
+}
+
+fn code_to_svg(code: &[u8]) -> String {
+    QrCode::new(code)
         .unwrap()
         .render::<svg::Color>()
-        .build();
+        .max_dimensions(300, 300)
+        .build()
+}
+
+#[post("/api/svg")]
+async fn create_svg(cr: web::Form<CodeRequest>) -> Result<HttpResponse> {
+    let svg = code_to_svg(cr.content.as_bytes());
     Ok(HttpResponse::Ok().content_type("image/svg+xml").body(svg))
 }
 
@@ -17,7 +28,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .wrap(middleware::Logger::default())
-            .service(get_code)
+            .service(create_svg)
             .service(Files::new("/", "./static").index_file("index.html"))
     })
     .bind("127.0.0.1:8080")?
