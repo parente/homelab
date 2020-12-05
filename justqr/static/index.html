@@ -7,23 +7,43 @@
   <script src="https://unpkg.com/htmx.org@1.0.0"></script>
   <style>
     body {
-      margin: 3em;
+      margin: 2em;
+      font-family: sans-serif;
     }
 
-    textarea {
-      width: 300px;
-      height: 150px;
+    input {
+      width: 100%;
+      max-width: 30em;
+    }
+
+    .qrImage {
+      margin-top: 2em;
+      background-color: white;
+    }
+
+    @media print {
+      .ui {
+        display: none;
+      }
+      body {
+        margin: auto;
+      }
     }
   </style>
+  <script type="text/javascript">
+    htmx.logAll()
+  </script>
 </head>
 
 <body>
-  <h1>#justqr</h1>
-  <p>Enter anything to encode in a QR code image.</p>
-  <form hx-post="/api/svg" hx-swap="innerHTML" hx-target="#qr">
-    <textarea name="content"></textarea>
-    <button>Submit</button>
-  </form>
-  <div id="qr"></div>
+  <div class="ui">
+    <h1>#justqr</h1>
+    <p>Enter text. Get a QR code. Print it.</p>
+    <form hx-post="/api/svg" hx-swap="innerHTML" hx-target="#qr">
+      <input name="content" type="text" />
+      <button>Submit</button>
+    </form>
+  </div>
+  <div id="qr" class="qrImage"></div>
 </body>
 </html>
