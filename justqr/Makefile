@@ -8,7 +8,7 @@ builder: ## Create a dockerx docker-container build for multi-arch build + push
 	@docker buildx create --use --name build --node build --driver docker-container --driver-opt network=host
 
 image: ## Build a local docker image
-	@DOCKER_BUILDKIT=1 docker buildx build --load --tag justqr:latest .
+	@DOCKER_BUILDKIT=1 docker buildx build --progress plain --load --tag justqr:latest .
 
 imagex: ## Make multi-arch platform images and push to GHCR as latest
 	@DOCKER_BUILDKIT=1 docker buildx build \
