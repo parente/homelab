@@ -2,6 +2,7 @@
 set -e
 
 apt update
+
 if [[ "$TARGETARCH" == "arm/v7" ]]; then
     apt install gcc-arm-linux-gnueabihf
     RUST_TARGET=armv7-unknown-${TARGETOS}-gnueabihf

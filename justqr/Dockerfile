@@ -1,22 +1,23 @@
+# syntax=docker/dockerfile:experimental
 FROM --platform=$BUILDPLATFORM rust:1.48 AS builder
-
-WORKDIR /rust
-
-COPY Cargo.* /rust
-ADD ./scripts /rust/scripts
 
 ARG TARGETARCH
 ARG TARGETOS
 
-RUN mkdir -p /rust/src \
-    && echo "fn main() {}" > /rust/src/main.rs \
-    && ./scripts/install-toolchain.sh \
-    && ./scripts/build-dependencies.sh
+WORKDIR /rust
+
+COPY ./scripts/install-toolchain.sh ./scripts/
+RUN ./scripts/install-toolchain.sh
 
 COPY . .
 
-RUN ./scripts/install-application.sh
+RUN --mount=type=cache,target=/usr/local/cargo/registry \
+    --mount=type=cache,target=/rust/target \
+    ./scripts/install-application.sh
 
-FROM rust:1.48-slim AS bin
+FROM gcr.io/distroless/cc-debian10:nonroot-amd64 AS bin
 LABEL org.opencontainers.image.source https://github.com/parente/homelab
-COPY --from=builder /usr/local/cargo/bin/justqr /rust/
+COPY --from=builder /usr/local/cargo/bin/justqr /rust/justqr
+COPY --from=builder /rust/static  /rust/static
+WORKDIR /rust
+ENTRYPOINT ["/rust/justqr"]
