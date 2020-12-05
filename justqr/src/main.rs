@@ -13,6 +13,7 @@ fn code_to_svg(code: &[u8]) -> String {
     QrCode::new(code)
         .unwrap()
         .render::<svg::Color>()
+        .quiet_zone(false)
         .max_dimensions(300, 300)
         .build()
 }
