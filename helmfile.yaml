@@ -107,7 +107,7 @@ releases:
           requests:
             memory: 256Mi
         persistence:
-          size: 5Gi # per replica
+          size: 10Gi # per replica
         ingress:
           enabled: true
           annotations:
