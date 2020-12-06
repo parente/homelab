@@ -1,5 +1,5 @@
 use actix_files::Files;
-use actix_web::{middleware, post, web, App, HttpResponse, HttpServer, Result};
+use actix_web::{middleware::Logger, post, web, App, HttpResponse, HttpServer, Result};
 use qrcode::render::svg;
 use qrcode::QrCode;
 use serde::Deserialize;
@@ -26,9 +26,12 @@ async fn create_svg(cr: web::Form<CodeRequest>) -> Result<HttpResponse> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    std::env::set_var("RUST_LOG", "actix_web=info");
+    env_logger::init();
+
     HttpServer::new(|| {
         App::new()
-            .wrap(middleware::Logger::default())
+            .wrap(Logger::default())
             .service(create_svg)
             .service(Files::new("/", "./static").index_file("index.html"))
     })
