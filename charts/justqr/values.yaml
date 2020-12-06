@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.i/parente/justqr
+  repository: ghcr.io/parente/justqr
   pullPolicy: IfNotPresent
   tag: latest
 
