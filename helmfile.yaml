@@ -230,7 +230,7 @@ releases:
     atomic: true
     installed: true
     values:
-      - replicas: 2
+      - replicaCount: 2
         resources:
           limits:
             cpu: 100m
