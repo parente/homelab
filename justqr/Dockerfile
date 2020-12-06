@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry \
     --mount=type=cache,target=/rust/target \
     ./scripts/install-application.sh
 
-FROM gcr.io/distroless/cc-debian10:nonroot-amd64 AS bin
+FROM gcr.io/distroless/cc-debian10:nonroot-${TARGETARCH} AS bin
 LABEL org.opencontainers.image.source https://github.com/parente/homelab
 COPY --from=builder /usr/local/cargo/bin/justqr /rust/justqr
 COPY --from=builder /rust/static  /rust/static
