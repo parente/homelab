@@ -3,10 +3,10 @@ entries:
   cfcidrwatch:
   - apiVersion: v2
     appVersion: 0.2.1
-    created: "2020-11-28T23:00:57.897483639Z"
+    created: "2020-12-06T05:35:16.162062124Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
-    digest: bbdbea32abdc7a8d2053c8e7e7367d14c238ac9bf239922035b27d113bc453a8
+    digest: a349358125274a21ea1bdde8d51850c0108243ada7d956c4c79df1101fb3e95d
     name: cfcidrwatch
     type: application
     urls:
@@ -14,7 +14,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-11-28T23:00:57.897121836Z"
+    created: "2020-12-06T05:35:16.161775923Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: a3782fbbb7a4b368421207b489ba4794e7f7a0697f8f3c7d80f13fe694913ea0
@@ -25,7 +25,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-28T23:00:57.896806835Z"
+    created: "2020-12-06T05:35:16.161091921Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: f35de7061f5e2a204fd50f32009be52f1b3b9837e551bbd30a702ea8194d9947
@@ -37,11 +37,11 @@ entries:
   cfsync:
   - apiVersion: v2
     appVersion: 0.3.1
-    created: "2020-11-28T23:00:57.898907847Z"
+    created: "2020-12-06T05:35:16.163443029Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
-    digest: 0f5eff4e0937c44256233e5b752a67581c8ddf6af0b7c4f3a1441d71b827e058
+    digest: 974f4062e49581561e06a15b738724983b27820cb02f632984751b4a81a172b5
     name: cfsync
     type: application
     urls:
@@ -49,7 +49,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 0.3.0
-    created: "2020-11-28T23:00:57.898635246Z"
+    created: "2020-12-06T05:35:16.163155328Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -61,7 +61,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-11-28T23:00:57.898318744Z"
+    created: "2020-12-06T05:35:16.162859627Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -73,7 +73,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2020-11-28T23:00:57.897917241Z"
+    created: "2020-12-06T05:35:16.162473125Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -83,10 +83,21 @@ entries:
     urls:
     - https://parente.github.io/homelab/cfsync-0.1.3.tgz
     version: 0.1.3
+  justqr:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2020-12-06T05:35:16.16374573Z"
+    description: Deploys the justqr web sapp which generates QR codes from text
+    digest: 5491de46683d6de949c9ab06f67a50040e2bce98fd649df506506de337e0d318
+    name: justqr
+    type: application
+    urls:
+    - https://parente.github.io/homelab/justqr-0.1.0.tgz
+    version: 0.1.0
   webapp:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-28T23:00:57.89936545Z"
+    created: "2020-12-06T05:35:16.164146031Z"
     description: Creates a deployment, service, and ingress for a stateless web app
     digest: d1e709456d0dbfa0e599362d1406a4978167084469f61107c583bd8bba4a265c
     name: webapp
@@ -97,12 +108,12 @@ entries:
   whoami:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-11-28T23:00:57.899638052Z"
+    created: "2020-12-06T05:35:16.164455932Z"
     description: Deploys the traefik/whoami app for cluster ingress testing
-    digest: 6d8cad6460476186eaac233c1773dde667b7c08b8abd0f66aa6d1cf5764dad78
+    digest: a1fd5eef0115d30d0f03286cd023d47d543b7e99998af2993694147dcb14d187
     name: whoami
     type: application
     urls:
     - https://parente.github.io/homelab/whoami-0.1.0.tgz
     version: 0.1.0
-generated: "2020-11-28T23:00:57.896185931Z"
+generated: "2020-12-06T05:35:16.160466119Z"
