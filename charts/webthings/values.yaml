@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: webthingsio/gateway
+  pullPolicy: IfNotPresent
+  tag: latest
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts: []
+  tls: []
+
+nodeSelector: {}
+
+env:
+  TZ: "America/New_York"
+
+extraVolumes: []
+extraVolumeMounts: []

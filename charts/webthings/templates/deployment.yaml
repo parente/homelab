@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{include "self.fullname" .}}
+  labels: {{- include "self.labels" . | nindent 4}}
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels: {{- include "self.selectorLabels" . | nindent 6}}
+  template:
+    metadata:
+      labels: {{- include "self.selectorLabels" . | nindent 8}}
+    spec:
+      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8}}
+      containers:
+        - name: {{.Chart.Name}}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{.Values.image.pullPolicy}}
+          securityContext:
+            privileged: true
+          env:
+            - name: TZ
+              value: {{.Values.env.TZ}}
+          volumeMounts:
+            - name: data
+              mountPath: /home/node/.webthings
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: https
+              containerPort: 4443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 60
+          resources: {{- toYaml .Values.resources | nindent 12}}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{include "self.fullname" .}}

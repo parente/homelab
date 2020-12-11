@@ -1,0 +1,6 @@
+apiVersion: v2
+name: webthings
+description: Deploys the Webthings app for home automation
+type: application
+version: 1.0.0
+appVersion: 1.0.0
