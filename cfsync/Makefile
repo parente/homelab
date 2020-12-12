@@ -1,4 +1,4 @@
-.PHONY: help builder clean image imagex venv
+.PHONY: help builder clean get image imagex run
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
