@@ -1,4 +1,6 @@
 repositories:
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
   - name: homelab
     url: https://parente.github.io/homelab
   - name: ingress-nginx
@@ -109,6 +111,46 @@ releases:
             tag: v1.9.7
         pushgateway:
           enabled: false
+  # Install grafana for metric visualization and alerting
+  - name: grafana
+    namespace: grafana
+    chart: grafana/grafana
+    version: 6.1.15
+    atomic: true
+    installed: true
+    values:
+      - adminUser: {{.Values.grafanaUser}}
+        adminPassword: {{.Values.grafanaPassword}}
+        persistence:
+          enabled: true
+          size: 2Gi
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: nginx
+          hosts: ["grafana.{{ .Values.cloudflareRootDomain }}"]
+          tls:
+            - hosts: ["grafana.{{ .Values.cloudflareRootDomain }}"]
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                access: proxy
+                url: http://prometheus-server.prometheus.svc.cluster.local
+                isDefault: true
+        notifiers:
+          notifiers.yaml:
+            apiVersion: 1
+            notifiers:
+              - name: Pushover
+                type: pushover
+                uid: pushover_0
+                is_default: true
+                settings:
+                  apiToken: {{.Values.grafanaPushoverAppKey}}
+                  userKey: {{.Values.grafanaPushoverGroupKey}}
   # Install minio object storage service
   - name: minio
     namespace: minio
