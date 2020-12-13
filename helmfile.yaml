@@ -95,6 +95,13 @@ releases:
             server-snippet: |
               ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
               ssl_verify_client on;
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 2
+              memory: 256Mi
   # Install prometheus for metrics collection
   - name: prometheus
     namespace: prometheus
@@ -105,12 +112,32 @@ releases:
     values:
       - alertmanager:
           enabled: false
+        nodeExporter:
+          resources:
+            limits:
+              cpu: 100m
+              memory: 8Mi
+            requests:
+              cpu: 100m
+              memory: 8Mi
         kube-state-metrics: # https://github.com/prometheus-community/helm-charts/issues/373
           image:
             repository: ghcr.io/parente/kube-state-metrics
             tag: v1.9.7
+          resources:
+            requests:
+              cpu: 100m
+              memory: 8Mi
+            limits:
+              memory: 16Mi
         pushgateway:
           enabled: false
+        server:
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 128Mi
   # Install grafana for metric visualization and alerting
   - name: grafana
     namespace: grafana
@@ -124,6 +151,11 @@ releases:
         persistence:
           enabled: true
           size: 2Gi
+        resources:
+          requests:
+            memory: 128Mi
+          limits:
+            memory: 128Mi
         ingress:
           enabled: true
           annotations:
@@ -167,6 +199,8 @@ releases:
           MINIO_BROWSER: on
         resources:
           requests:
+            memory: 96Mi
+          limits: 
             memory: 256Mi
         persistence:
           size: 10Gi # per replica
@@ -284,7 +318,7 @@ releases:
           requests:
             cpu: 100m
             memory: 8Mi
-# Install the justqr web app to generate QR codes
+  # Install the justqr web app to generate QR codes
   - name: justqr
     namespace: default
     chart: homelab/justqr
@@ -296,10 +330,10 @@ releases:
         resources:
           limits:
             cpu: 100m
-            memory: 8Mi
+            memory: 4Mi
           requests:
             cpu: 100m
-            memory: 8Mi
+            memory: 4Mi
         ingress:
           hosts:
             - host: "justqr.{{ .Values.cloudflareRootDomain }}"
