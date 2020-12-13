@@ -230,13 +230,13 @@ releases:
                             port:
                               number: 9000
           {{- end}}
-  # Install the whoami app to test ingress
+  # (Optionally) Install the whoami app to test ingress
   - name: whoami
     namespace: default
     chart: homelab/whoami
     version: 0.1.0
     atomic: true
-    installed: true
+    installed: false
     values:
       - ingress:
           hosts:
