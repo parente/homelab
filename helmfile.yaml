@@ -201,7 +201,7 @@ releases:
           requests:
             memory: 96Mi
           limits: 
-            memory: 256Mi
+            memory: 512Mi
         persistence:
           size: 10Gi # per replica
         ingress:
