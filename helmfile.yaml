@@ -116,7 +116,7 @@ releases:
           resources:
             limits:
               cpu: 100m
-              memory: 8Mi
+              memory: 16Mi
             requests:
               cpu: 100m
               memory: 8Mi
@@ -201,7 +201,7 @@ releases:
           requests:
             memory: 96Mi
           limits: 
-            memory: 512Mi
+            memory: 1024Gi
         persistence:
           size: 10Gi # per replica
         ingress:
@@ -294,7 +294,7 @@ releases:
         resources:
           limits:
             cpu: 100m
-            memory: 8Mi
+            memory: 16Mi
           requests:
             cpu: 100m
             memory: 8Mi
