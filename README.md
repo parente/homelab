@@ -48,7 +48,7 @@ To run on a single Raspberry Pi 3 (ARMv7):
 
 To set up a Raspberry Pi 4 (ARMv7) cluster:
 
-- Write empty `ssh` file boot partition
+- Write empty `ssh` file in the microSD card boot partition
 - Write `wpa_supplicant.conf` to boot partition like:
 
 ```
@@ -69,6 +69,7 @@ network={
 - Add `cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory` to `/boot/cmdline.txt`
 - Disable wifi power saving with `sudo /sbin/iw wlan0 set power_save off` and permanently in
   `/etc/rc.local` before the exit
+- Disable swap with `sudo dphys-swapfile swapoff && sudo dphys-swapfile uninstall && sudo update-rc.d dphys-swapfile remove`
 - Assign fixed IP
 - Repeat for all nodes
 - Install `k3sup` on my dev box
