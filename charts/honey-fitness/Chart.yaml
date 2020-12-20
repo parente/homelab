@@ -1,0 +1,6 @@
+apiVersion: v2
+name: honey-fitness
+description: Deploys the honey.fitness web app which shows the family hamster's wheel activity
+type: application
+version: 0.1.0
+appVersion: 0.1.0
