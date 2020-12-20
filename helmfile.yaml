@@ -302,7 +302,7 @@ releases:
   - name: cfcidrwatch
     namespace: default
     chart: homelab/cfcidrwatch
-    version: 0.2.1
+    version: 0.2.2
     atomic: true
     installed: true
     needs:
