@@ -1,0 +1,15 @@
+releases:
+  # (Optionally) Install the whoami app to test ingress
+  - name: whoami
+    namespace: default
+    chart: homelab/whoami
+    version: 0.1.0
+    atomic: true
+    installed: false
+    values:
+      - ingress:
+          hosts:
+            - host: "whoami.{{ .Values.cloudflareRootDomain }}"
+              paths: ["/"]
+          tls:
+            - hosts: ["whoami.{{ .Values.cloudflareRootDomain }}"]

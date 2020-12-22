@@ -1,0 +1,88 @@
+repositories:
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+
+releases:
+  # Install prometheus for metrics collection
+  - name: prometheus
+    namespace: prometheus
+    chart: prometheus-community/prometheus
+    version: 13.0.0
+    atomic: true
+    installed: true
+    values:
+      - alertmanager:
+          enabled: false
+        nodeExporter:
+          resources:
+            limits:
+              cpu: 100m
+              memory: 16Mi
+            requests:
+              cpu: 100m
+              memory: 8Mi
+        kube-state-metrics: # https://github.com/prometheus-community/helm-charts/issues/373
+          image:
+            repository: ghcr.io/parente/kube-state-metrics
+            tag: v1.9.7
+          resources:
+            requests:
+              cpu: 100m
+              memory: 8Mi
+            limits:
+              memory: 16Mi
+        pushgateway:
+          enabled: false
+        server:
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 128Mi
+  # Install grafana for metric visualization and alerting
+  - name: grafana
+    namespace: grafana
+    chart: grafana/grafana
+    version: 6.1.15
+    atomic: true
+    installed: true
+    values:
+      - adminUser: {{.Values.grafanaUser}}
+        adminPassword: {{.Values.grafanaPassword}}
+        persistence:
+          enabled: true
+          size: 2Gi
+        resources:
+          requests:
+            memory: 128Mi
+          limits:
+            memory: 128Mi
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: nginx
+          hosts: ["grafana.{{ .Values.cloudflareRootDomain }}"]
+          tls:
+            - hosts: ["grafana.{{ .Values.cloudflareRootDomain }}"]
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                access: proxy
+                url: http://prometheus-server.prometheus.svc.cluster.local
+                isDefault: true
+        notifiers:
+          notifiers.yaml:
+            apiVersion: 1
+            notifiers:
+              - name: Pushover
+                type: pushover
+                uid: pushover_0
+                is_default: true
+                settings:
+                  apiToken: {{.Values.grafanaPushoverAppKey}}
+                  userKey: {{.Values.grafanaPushoverGroupKey}}

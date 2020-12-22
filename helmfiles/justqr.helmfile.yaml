@@ -1,0 +1,23 @@
+releases:
+  # Install the justqr web app to generate QR codes
+  - name: justqr
+    namespace: default
+    chart: homelab/justqr
+    version: 0.1.1
+    atomic: true
+    installed: true
+    values:
+      - replicaCount: 2
+        resources:
+          limits:
+            cpu: 100m
+            memory: 4Mi
+          requests:
+            cpu: 100m
+            memory: 4Mi
+        ingress:
+          hosts:
+            - host: "justqr.{{ .Values.cloudflareRootDomain }}"
+              paths: ["/"]
+          tls:
+            - hosts: ["justqr.{{ .Values.cloudflareRootDomain }}"]

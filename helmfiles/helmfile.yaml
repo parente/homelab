@@ -1,0 +1,25 @@
+environments:
+  default:
+    values:
+      - values.yaml
+    secrets:
+      - secrets.yaml
+
+repositories:
+  - name: homelab
+    url: https://parente.github.io/homelab
+  - name: incubator
+    url: https://charts.helm.sh/incubator
+  - name: stable
+    url: https://charts.helm.sh/stable
+
+bases:
+  - cfcidrwatch.helmfile.yaml
+  - cfsync.helmfile.yaml
+  - honey.fitness.helmfile.yaml
+  - ingress.helmfile.yaml
+  - justqr.helmfile.yaml
+  - metrics.helmfile.yaml
+  - minio.helmfile.yaml
+  - storage.helmfile.yaml
+  - whoami.helmfile.yaml

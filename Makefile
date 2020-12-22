@@ -7,10 +7,7 @@ help:
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 apply: ## Apply helmfile changes to the cluster
-	@helmfile apply
-
-clean: ## Destroy the cluster
-	@k3d cluster delete homelab
+	@helmfile -f helmfiles/helmfile.yaml apply
 
 cluster: ## Create a multi-host, multi-node cluster
 	@k3sup install \
@@ -35,10 +32,10 @@ cluster: ## Create a multi-host, multi-node cluster
 		--k3s-channel v1.19
 
 diff: ## Diff the helmfile with the cluster
-	@helmfile diff
+	@helmfile -f helmfiles/helmfile.yaml diff
 
 edit-secrets: ## Edit helm secrets in VSCode
-	@EDITOR="code --wait" helm secrets edit secrets.yaml
+	@EDITOR="code --wait" helm secrets edit helmfiles/secrets.yaml
 
 localhost-cluster: ## Create a single-host, multi-node cluster
 	@mkdir -p $(SHARED_VOLUME)
@@ -49,5 +46,8 @@ localhost-cluster: ## Create a single-host, multi-node cluster
 		--k3s-server-arg '--no-deploy=traefik' \
 		--agents 2
 
+localhost-clean: ## Destroy a local cluster
+	@k3d cluster delete homelab
+
 sync: ## Sync the entire helmfile with the cluster
-	@helmfile sync
+	@helmfile -f helmfiles/helmfile.yaml sync

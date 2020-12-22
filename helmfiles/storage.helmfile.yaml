@@ -1,0 +1,19 @@
+releases:
+  # Overwrite the default local-path-provisioner configuration with one that retains all volumes
+  - name: retained-local-path
+    namespace: kube-system
+    chart: incubator/raw
+    version: 0.2.3
+    atomic: true
+    installed: true
+    values:
+      - resources:
+          - apiVersion: storage.k8s.io/v1
+            kind: StorageClass
+            metadata:
+              name: local-path
+              annotations:
+                storageclass.kubernetes.io/is-default-class: "true"
+            provisioner: rancher.io/local-path
+            volumeBindingMode: WaitForFirstConsumer
+            reclaimPolicy: Retain

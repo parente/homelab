@@ -1,0 +1,67 @@
+repositories:
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+
+releases:
+  # Install Cloudflare origin pull certificate to allow nginx to auth traffic coming from CF only
+  - name: cf-origin-pull-cert
+    namespace: ingress-nginx
+    chart: incubator/raw
+    version: 0.2.3
+    atomic: true
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: cloudflare-origin-pull-certificate
+            data:
+              origin-pull-ca.pem: {{.Values.cloudflareOriginPullCert | b64enc}}
+  # Install the wildcard origin certificate and key to encrypt traffic between Cloudflare and nginx
+  - name: cf-origin-cert
+    namespace: ingress-nginx
+    chart: incubator/raw
+    version: 0.2.3
+    atomic: true
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: cloudflare-origin-certificate
+            type: kubernetes.io/tls
+            data:
+              tls.crt: {{.Values.cloudflareOriginCert | b64enc}}
+              tls.key: {{.Values.cloudflareOriginKey | b64enc}}
+  # Install nginx ingress controller with the Cloudflare origin pull certificate
+  - name: ingress-nginx
+    namespace: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    version: 3.4.0
+    atomic: true
+    needs:
+      - ingress-nginx/cf-origin-pull-cert
+      - ingress-nginx/cf-origin-cert
+    values:
+      - controller:
+          replicaCount: 2
+          extraArgs:
+            default-ssl-certificate: ingress-nginx/cloudflare-origin-certificate
+          extraVolumes:
+            - name: cloudflare-origin-pull-certificate
+              secret:
+                secretName: cloudflare-origin-pull-certificate
+          extraVolumeMounts:
+            - name: cloudflare-origin-pull-certificate
+              mountPath: /var/lib/certificates/cloudflare
+          config:
+            server-snippet: |
+              ssl_client_certificate /var/lib/certificates/cloudflare/origin-pull-ca.pem;
+              ssl_verify_client on;
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 2
+              memory: 256Mi

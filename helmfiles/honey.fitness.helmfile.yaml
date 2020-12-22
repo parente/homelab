@@ -1,0 +1,20 @@
+releases:
+  - name: honey-fitness
+    namespace: default
+    chart: homelab/honey-fitness
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - replicaCount: 2
+        resources:
+          limits:
+            memory: 64Mi
+          requests:
+            memory: 16Mi
+        ingress:
+          hosts:
+            - host: "honey.{{ .Values.cloudflareRootDomain }}"
+              paths: ["/"]
+          tls:
+            - hosts: ["honey.{{ .Values.cloudflareRootDomain }}"]

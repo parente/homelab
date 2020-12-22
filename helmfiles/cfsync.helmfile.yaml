@@ -1,0 +1,21 @@
+releases:
+  # Install the cfsync app that updates Cloudflare DNS records pointing to the cluster load balancer
+  # public IPv4 address
+  - name: cfsync
+    namespace: cfsync
+    chart: homelab/cfsync
+    version: 0.3.1
+    atomic: true
+    installed: true
+    values:
+      - env:
+          CF_API_TOKEN: {{.Values.cloudflareApiToken}}
+          CF_ZONE_ID: {{.Values.cloudflareZoneId}}
+          CF_ROOT_DOMAIN: {{.Values.cloudflareRootDomain}}
+        resources:
+          limits:
+            cpu: 100m
+            memory: 16Mi
+          requests:
+            cpu: 100m
+            memory: 8Mi
