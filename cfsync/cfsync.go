@@ -179,8 +179,7 @@ func (p *publicIP) Set(ip string) {
 
 func main() {
 	cfAPIToken := os.Getenv("CF_API_TOKEN")
-	cfZoneID := os.Getenv("CF_ZONE_ID")
-	cfRootDomain := os.Getenv("CF_ROOT_DOMAIN")
+	cfRootDomains := os.Getenv("CF_ROOT_DOMAINS")
 
 	var err error
 
@@ -216,31 +215,39 @@ func main() {
 	pip := publicIP{}
 	pip.Set(ipifyIP())
 
+	// Resolve root domain zone information
+	zones, err := cf.ListZones(strings.Split(cfRootDomains, ",")...)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	wg := sync.WaitGroup{}
-	wg.Add(2)
+	wg.Add(len(zones) + 1)
 
 	// Goroutine for DNS record sync
-	go func() {
-		defer wg.Done()
-		for {
-			log.Println("Starting sync")
-			hosts := ingressHosts(k8s, func(host string) bool {
-				return strings.HasSuffix(host, cfRootDomain)
-			})
-			log.Println(fmt.Sprintf("Ingress hosts: %v", hosts))
-			records := dnsRecords(cf, cfZoneID)
-			log.Println(fmt.Sprintf("A records: %d", len(*records)))
-			syncRecords(cf, pip.Get(), cfZoneID, hosts, records)
-			log.Println("Completed sync")
-			time.Sleep(syncInterval)
-		}
-	}()
+	for _, zone := range zones {
+		go func(zone cloudflare.Zone) {
+			defer wg.Done()
+			for {
+				log.Println("Starting Ingress-Cloudflare sync")
+				hosts := ingressHosts(k8s, func(host string) bool {
+					return strings.HasSuffix(host, zone.Name)
+				})
+				log.Println(fmt.Sprintf("Ingress hosts: %v", hosts))
+				records := dnsRecords(cf, zone.ID)
+				log.Println(fmt.Sprintf("A records: %d", len(*records)))
+				syncRecords(cf, pip.Get(), zone.ID, hosts, records)
+				log.Println("Completed Ingress-Cloudflare sync")
+				time.Sleep(syncInterval)
+			}
+		}(zone)
+	}
 
 	// Goroutine for public IP checks
 	go func() {
 		defer wg.Done()
 		for {
-			log.Println("Checking public IP")
+			log.Println("Starting public IP check")
 			ip := ipifyIP()
 			pip.Set(ip)
 			log.Println(fmt.Sprintf("Completed IP check: %s", ip))
