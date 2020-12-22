@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "./cfcidrwatch"
+	},
+	{
+		"path": "./justqr"
+	},
+	{
+		"path": "./cfsync"
+	}
+]
+}
