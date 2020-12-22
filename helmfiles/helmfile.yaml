@@ -4,7 +4,7 @@ environments:
       - values.yaml
     secrets:
       - secrets.yaml
-
+---
 repositories:
   - name: homelab
     url: https://parente.github.io/homelab
@@ -12,7 +12,6 @@ repositories:
     url: https://charts.helm.sh/incubator
   - name: stable
     url: https://charts.helm.sh/stable
-
 bases:
   - cfcidrwatch.helmfile.yaml
   - cfsync.helmfile.yaml
