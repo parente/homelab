@@ -31,8 +31,8 @@ releases:
               name: cloudflare-origin-certificate
             type: kubernetes.io/tls
             data:
-              tls.crt: {{.Values.cloudflareOriginCert | b64enc}}
-              tls.key: {{.Values.cloudflareOriginKey | b64enc}}
+              tls.crt: {{.Values.defaultOriginCert | b64enc}}
+              tls.key: {{.Values.defaultOriginKey | b64enc}}
   # Install nginx ingress controller with the Cloudflare origin pull certificate
   - name: ingress-nginx
     namespace: ingress-nginx

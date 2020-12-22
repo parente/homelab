@@ -11,7 +11,7 @@ releases:
       - env:
           CF_API_TOKEN: {{.Values.cloudflareApiToken}}
           CF_ZONE_ID: {{.Values.cloudflareZoneId}}
-          CF_ROOT_DOMAIN: {{.Values.cloudflareRootDomain}}
+          CF_ROOT_DOMAIN: {{.Values.defaultDomain}}
         resources:
           limits:
             cpu: 100m

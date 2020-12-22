@@ -28,7 +28,7 @@ releases:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: nginx
-          hosts: ["minio.{{ .Values.cloudflareRootDomain }}"]
+          hosts: ["minio.{{ .Values.defaultDomain }}"]
   # Create ingresses for minio static site bucket prefixes
   - name: minio-static-sites
     namespace: minio

@@ -17,7 +17,7 @@ releases:
             memory: 4Mi
         ingress:
           hosts:
-            - host: "justqr.{{ .Values.cloudflareRootDomain }}"
+            - host: "justqr.{{ .Values.defaultDomain }}"
               paths: ["/"]
           tls:
-            - hosts: ["justqr.{{ .Values.cloudflareRootDomain }}"]
+            - hosts: ["justqr.{{ .Values.defaultDomain }}"]

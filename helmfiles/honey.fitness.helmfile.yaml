@@ -1,10 +1,28 @@
 releases:
+  # Install the honey.fitness origin certificate and key
+  - name: cf-honey-fitness-origin-cert
+    namespace: honey-fitness
+    chart: incubator/raw
+    version: 0.2.3
+    atomic: true
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: honey-fitness-tls
+            type: kubernetes.io/tls
+            data:
+              tls.crt: {{.Values.honeyFitnessOriginCert | b64enc}}
+              tls.key: {{.Values.honeyFitnessOriginKey | b64enc}}
   - name: honey-fitness
-    namespace: default
+    namespace: honey-fitness
     chart: homelab/honey-fitness
     version: 0.1.0
     atomic: true
     installed: true
+    needs:
+      - honey-fitness/cf-honey-fitness-origin-cert
     values:
       - replicaCount: 2
         resources:
@@ -14,7 +32,11 @@ releases:
             memory: 16Mi
         ingress:
           hosts:
-            - host: "honey.{{ .Values.cloudflareRootDomain }}"
+            - host: "honey.fitness"
+              paths: ["/"]
+            - host: "honey.{{.Values.defaultDomain}}"
               paths: ["/"]
           tls:
-            - hosts: ["honey.{{ .Values.cloudflareRootDomain }}"]
+            - hosts: ["honey.fitness"]
+              secretName: honey-fitness-tls
+            - hosts: ["honey.{{.Values.defaultDomain}}"]

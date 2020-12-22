@@ -9,7 +9,7 @@ releases:
     values:
       - ingress:
           hosts:
-            - host: "whoami.{{ .Values.cloudflareRootDomain }}"
+            - host: "whoami.{{ .Values.defaultDomain }}"
               paths: ["/"]
           tls:
-            - hosts: ["whoami.{{ .Values.cloudflareRootDomain }}"]
+            - hosts: ["whoami.{{ .Values.defaultDomain }}"]
