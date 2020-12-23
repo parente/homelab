@@ -4,8 +4,7 @@
 //
 // The command requires the following environment variables to function properly:
 //
-// CF_ROOT_DOMAIN: Cloudflare domain name to sync
-// CF_ZONE_ID: Cloudflare zone ID of the root domain
+// CF_ROOT_DOMAINS: Cloudflare domains to sync with ingress domains, comma separated
 // CF_API_TOKEN: Cloudflare API token granting Zone read and DNS edit
 //
 // The command also respects the following env vars:
@@ -224,12 +223,12 @@ func main() {
 	wg := sync.WaitGroup{}
 	wg.Add(len(zones) + 1)
 
-	// Goroutine for DNS record sync
+	// Goroutines for DNS record sync
 	for _, zone := range zones {
 		go func(zone cloudflare.Zone) {
 			defer wg.Done()
 			for {
-				log.Println("Starting Ingress-Cloudflare sync")
+				log.Println(fmt.Sprintf("Starting Ingress-Cloudflare sync for %s", zone.Name))
 				hosts := ingressHosts(k8s, func(host string) bool {
 					return strings.HasSuffix(host, zone.Name)
 				})
@@ -237,7 +236,7 @@ func main() {
 				records := dnsRecords(cf, zone.ID)
 				log.Println(fmt.Sprintf("A records: %d", len(*records)))
 				syncRecords(cf, pip.Get(), zone.ID, hosts, records)
-				log.Println("Completed Ingress-Cloudflare sync")
+				log.Println(fmt.Sprintf("Completed Ingress-Cloudflare sync for %s", zone.Name))
 				time.Sleep(syncInterval)
 			}
 		}(zone)
