@@ -12,9 +12,13 @@ releases:
           - name: "zooz-zst10"
             path: "/dev/ttyACM0"
         ingress:
-          enabled: true
           hosts:
             - host: "things.{{ .Values.defaultDomain }}"
               paths: ["/"]
           tls:
             - hosts: ["things.{{ .Values.defaultDomain }}"]
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 256Mi
