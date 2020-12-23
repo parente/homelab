@@ -12,7 +12,6 @@ spec:
       labels: {{- include "self.selectorLabels" . | nindent 8}}
     spec:
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8}}
-      hostNetwork: true
       containers:
         - name: {{.Chart.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -25,6 +24,10 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /home/node/.webthings
+            {{- range .Values.devices }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080
@@ -48,3 +51,8 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{include "self.fullname" .}}
+        {{- range .Values.devices }}
+        - name: {{ .name }}
+          hostPath:
+            path: {{ .path }}
+        {{- end }}

@@ -33,7 +33,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port: 
-                  name: https
+                  name: http
           {{- end }}
     {{- end }}
   {{- end }}

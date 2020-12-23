@@ -17,5 +17,4 @@ nodeSelector: {}
 env:
   TZ: "America/New_York"
 
-extraVolumes: []
-extraVolumeMounts: []
+devices: []
