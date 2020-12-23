@@ -24,13 +24,12 @@ cluster: ## Create a multi-host, multi-node cluster
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
 		--k3s-channel v1.19
-	# @k3sup join \
-	# 	--ip 192.168.86.202 \
-	# 	--server-ip 192.168.86.200 \
-	# 	--user pi \
-	# 	--ssh-key ~/.ssh/pacman \
-	# 	--k3s-channel v1.19
-	# 	--k3s-extra-args '--node-label homelab/external-device=zwave-controller'
+	@k3sup join \
+		--ip 192.168.86.202 \
+		--server-ip 192.168.86.200 \
+		--user pi \
+		--ssh-key ~/.ssh/pacman \
+		--k3s-channel v1.19
 	@k3sup join \
 		--ip 192.168.86.203 \
 		--server-ip 192.168.86.200 \
