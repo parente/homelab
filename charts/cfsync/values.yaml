@@ -7,7 +7,6 @@ image:
 
 env:
   CF_API_TOKEN: ""
-  CF_ZONE_ID: ""
-  CF_ROOT_DOMAIN: ""
+  CF_ROOT_DOMAINS: ""
 
 resources: {}

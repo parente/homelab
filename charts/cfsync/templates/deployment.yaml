@@ -27,5 +27,5 @@ spec:
               value: {{.Values.env.CF_API_TOKEN}}
             - name: CF_ZONE_ID
               value: {{.Values.env.CF_ZONE_ID}}
-            - name: CF_ROOT_DOMAIN
-              value: {{.Values.env.CF_ROOT_DOMAIN}}
+            - name: CF_ROOT_DOMAINS
+              value: {{.Values.env.CF_ROOT_DOMAINS}}

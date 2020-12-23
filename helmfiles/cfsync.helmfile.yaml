@@ -10,8 +10,7 @@ releases:
     values:
       - env:
           CF_API_TOKEN: {{.Values.cloudflareApiToken}}
-          CF_ZONE_ID: {{.Values.cloudflareZoneId}}
-          CF_ROOT_DOMAIN: {{.Values.defaultDomain}}
+          CF_ROOT_DOMAINS: [{{.Values.cfSyncDomains}}"]
         resources:
           limits:
             cpu: 100m

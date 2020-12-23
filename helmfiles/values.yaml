@@ -1,5 +1,10 @@
-cloudflareZoneId: 4a8d6a2fb498635183dd1433fe57d436
+# Default domain for ingress-nginx
 defaultDomain: parente.dev
+
+# Domains to sync between ingress and Cloudflare
+cfSyncDomains:
+  - parente.dev
+  - honey.fitness
 
 # From https://dash.cloudflare.com/<account id>/parente.dev/ssl-tls/origin
 defaultOriginCert: |
@@ -99,6 +104,7 @@ cloudflareOriginPullCert: |
   fVQ6VpyjEXdiIXWUq/o=
   -----END CERTIFICATE-----
 
+# Minio buckets to map to static site ingresses
 minioStaticSites:
   - name: root
     host: parente.dev
