@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: webthingsio/gateway
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: ""
 
 ingress:
   enabled: true
