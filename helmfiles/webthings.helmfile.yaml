@@ -1,7 +1,7 @@
 releases:
   - name: webthings
     namespace: webthings
-    chart: ../charts/webthings
+    chart: homelab/webthings
     version: 1.0.0
     atomic: true
     installed: true
