@@ -3,10 +3,10 @@ entries:
   cfcidrwatch:
   - apiVersion: v2
     appVersion: 0.2.2
-    created: "2020-12-23T04:03:03.988008138Z"
+    created: "2020-12-23T18:10:27.759486725Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
-    digest: 853fb741ea17d13cff22cf9d71a74d4c9f3a1594ccd3c75384e654b2ea9f89e3
+    digest: 81d6e5ab5677a6a7402bb1596175dff0acefd46e3c2534e93f209e681bc2f802
     name: cfcidrwatch
     type: application
     urls:
@@ -14,7 +14,7 @@ entries:
     version: 0.2.2
   - apiVersion: v2
     appVersion: 0.2.1
-    created: "2020-12-23T04:03:03.987713436Z"
+    created: "2020-12-23T18:10:27.759212925Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: a349358125274a21ea1bdde8d51850c0108243ada7d956c4c79df1101fb3e95d
@@ -25,7 +25,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-12-23T04:03:03.986997133Z"
+    created: "2020-12-23T18:10:27.758959824Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: a3782fbbb7a4b368421207b489ba4794e7f7a0697f8f3c7d80f13fe694913ea0
@@ -36,7 +36,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-12-23T04:03:03.986635631Z"
+    created: "2020-12-23T18:10:27.758670924Z"
     description: "Deploys the cfcidrwatch app which watches for Cloudflare CIDR block
       changes and notifies a \nPushover group when there is a change.\n"
     digest: f35de7061f5e2a204fd50f32009be52f1b3b9837e551bbd30a702ea8194d9947
@@ -48,11 +48,11 @@ entries:
   cfsync:
   - apiVersion: v2
     appVersion: 0.4.0
-    created: "2020-12-23T04:03:03.989593945Z"
+    created: "2020-12-23T18:10:27.760999925Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
-    digest: 7ba4f2931034d969dbefa62ed3cb775be8e9a3ed00b6dc3ba1fc2c00f694737f
+    digest: 67b2a9a9f38ec714eba766af725749a70ba84ca0fe18f543f4400bf2520112c0
     name: cfsync
     type: application
     urls:
@@ -60,7 +60,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 0.3.1
-    created: "2020-12-23T04:03:03.989317944Z"
+    created: "2020-12-23T18:10:27.760747425Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -72,7 +72,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 0.3.0
-    created: "2020-12-23T04:03:03.989030042Z"
+    created: "2020-12-23T18:10:27.760467625Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -84,7 +84,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 0.2.0
-    created: "2020-12-23T04:03:03.988750241Z"
+    created: "2020-12-23T18:10:27.760149325Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -96,7 +96,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2020-12-23T04:03:03.988387339Z"
+    created: "2020-12-23T18:10:27.759817325Z"
     description: |
       Synchronizes Cloudflare A records with ingress hosts using the public IP from ipify.
       Useful for local, homelab k8s setups.
@@ -109,10 +109,10 @@ entries:
   honey-fitness:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-12-23T04:03:03.989892846Z"
+    created: "2020-12-23T18:10:27.761258525Z"
     description: Deploys the honey.fitness web app which shows the family hamster's
       wheel activity
-    digest: 541489a30e22c471afc7d93df12465fb0f6806516490fb88c28200f5044e704d
+    digest: 53155a3e6fc0c628c8398cc82242e25ba6ed55440b1d15da5d9b6eeb67fb1368
     name: honey-fitness
     type: application
     urls:
@@ -121,9 +121,9 @@ entries:
   justqr:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2020-12-23T04:03:03.990474549Z"
+    created: "2020-12-23T18:10:27.761833725Z"
     description: Deploys the justqr web app which generates QR codes from text
-    digest: 4f650120030d01059f9fdf543ec9d9a7a4ed8fb2539da6f0a633d0f39220e3f5
+    digest: 3166577ed04c1089907e0fe8ede12f8fe7d21b7c4416fa9f6983688acdef8396
     name: justqr
     type: application
     urls:
@@ -131,7 +131,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-12-23T04:03:03.990183248Z"
+    created: "2020-12-23T18:10:27.761528825Z"
     description: Deploys the justqr web sapp which generates QR codes from text
     digest: 5491de46683d6de949c9ab06f67a50040e2bce98fd649df506506de337e0d318
     name: justqr
@@ -142,7 +142,7 @@ entries:
   webapp:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-12-23T04:03:03.990914951Z"
+    created: "2020-12-23T18:10:27.762244925Z"
     description: Creates a deployment, service, and ingress for a stateless web app
     digest: d1e709456d0dbfa0e599362d1406a4978167084469f61107c583bd8bba4a265c
     name: webapp
@@ -150,15 +150,26 @@ entries:
     urls:
     - https://parente.github.io/homelab/webapp-0.1.0.tgz
     version: 0.1.0
+  webthings:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2020-12-23T18:10:27.762562325Z"
+    description: Deploys the Webthings app for home automation
+    digest: 13f782bbd97984b7ca34222b5a72109d91fdd576a575110f34126faf0dd2999f
+    name: webthings
+    type: application
+    urls:
+    - https://parente.github.io/homelab/webthings-1.0.0.tgz
+    version: 1.0.0
   whoami:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-12-23T04:03:03.991217253Z"
+    created: "2020-12-23T18:10:27.762818725Z"
     description: Deploys the traefik/whoami app for cluster ingress testing
-    digest: 1ac6c57fa6f54c2a77c84c0f1c1a52b1f19332f5016d8f86a9689ea58fc5a008
+    digest: d9fd0df03644db8736314a0253192e9476a4eef5a0f93074de4e53b758a1d04d
     name: whoami
     type: application
     urls:
     - https://parente.github.io/homelab/whoami-0.1.0.tgz
     version: 0.1.0
-generated: "2020-12-23T04:03:03.985908928Z"
+generated: "2020-12-23T18:10:27.758197524Z"
