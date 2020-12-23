@@ -36,7 +36,8 @@ cluster: ## Create a multi-host, multi-node cluster
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.19
+		--k3s-channel v1.19 \
+		--k3s-extra-args '--node-label homelab/external-device=zwave-controller'
 
 diff: ## Diff the helmfile with the cluster
 	@helmfile -f helmfiles/helmfile.yaml diff
