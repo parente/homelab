@@ -1,0 +1,23 @@
+releases:
+  - name: webthings
+    namespace: webthings
+    chart: ../charts/webthings
+    version: 1.0.0
+    atomic: true
+    installed: false
+    values:
+      - nodeSelector:
+          homelab/external-device: zwave-controller
+        # extraVolumes:
+        #   - name: zooz-zst10
+        #     hostPath:
+        #       path: /dev/ttyACM0
+        # extraVolumeMounts:
+        #   - name: zooz-zst10
+        #     mountPath: /dev/ttyACM0
+        ingress:
+          hosts:
+            - host: "things.{{ .Values.defaultDomain }}"
+              paths: ["/"]
+          tls:
+            - hosts: ["things.{{ .Values.defaultDomain }}"]

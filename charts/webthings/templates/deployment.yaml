@@ -12,6 +12,7 @@ spec:
       labels: {{- include "self.selectorLabels" . | nindent 8}}
     spec:
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8}}
+      hostNetwork: true
       containers:
         - name: {{.Chart.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

@@ -21,4 +21,5 @@ bases:
   - metrics.helmfile.yaml
   - minio.helmfile.yaml
   - storage.helmfile.yaml
+  - webthings.helmfile.yaml
   - whoami.helmfile.yaml
