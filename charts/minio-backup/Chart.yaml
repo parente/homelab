@@ -2,5 +2,5 @@ apiVersion: v2
 name: minio-backup
 description: Schedules a CronJob that copies data from persistent volume to a minio bucket
 type: application
-version: 0.1.0
-appVersion: 0.1.0
+version: 0.1.1
+appVersion: 0.1.1

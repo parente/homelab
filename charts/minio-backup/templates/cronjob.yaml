@@ -4,7 +4,7 @@ metadata:
   name: {{include "self.fullname" .}}
   labels: {{- include "self.labels" . | nindent 4}}
 spec:
-  schedule: {{.Values.schedule}}
+  schedule: "{{.Values.schedule}}"
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 3
   jobTemplate:

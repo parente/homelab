@@ -25,7 +25,7 @@ releases:
   - name: webthings-backup
     namespace: webthings
     chart: homelab/minio-backup
-    version: 0.1.0
+    version: 0.1.1
     atomic: true
     installed: true
     values:
