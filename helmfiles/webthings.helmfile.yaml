@@ -22,3 +22,30 @@ releases:
             memory: 512Mi
           requests:
             memory: 256Mi
+  - name: webthings-backup
+    namespace: webthings
+    chart: homelab/minio-backup
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - image:
+          tag: RELEASE.2020-11-25T23-04-07Z
+        sourcePaths:
+          - "/data/config"
+          - "/data/data"
+          - "/data/ssl"
+        destinationPath: backup/webthings/
+        minioUrl: http://{{.Values.minioBackupAccessKey}}:{{.Values.minioBackupSecretKey}}@minio.minio.svc.cluster.local:9000
+        schedule: "0 5 * * *"
+        lifetime: "14d"
+        pvc:
+          name: webthings
+          localPath: /data
+        resources:
+          requests:
+            memory: 16Mi
+            cpu: 100m
+          limits:
+            memory: 16Mi
+            cpu: 100m
