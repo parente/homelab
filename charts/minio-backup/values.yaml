@@ -1,0 +1,17 @@
+schedule: "*/15 * * * *"
+
+image:
+  repository: minio/mc
+  pullPolicy: IfNotPresent
+  tag: ""
+
+pvc:
+  name: ""
+  localPath: "/data"
+
+sourcePaths: []
+destinationPath: "minio/backup/"
+minioUrl: ""
+lifetime: "30d"
+
+resources: {}

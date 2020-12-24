@@ -1,0 +1,39 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{include "self.fullname" .}}
+  labels: {{- include "self.labels" . | nindent 4}}
+spec:
+  schedule: {{.Values.schedule}}
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: {{.Chart.Name}}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{.Values.image.pullPolicy}}
+              resources: {{- toYaml .Values.resources | nindent 16}}
+              volumeMounts:
+                - name: data
+                  mountPath: {{.Values.pvc.localPath}}
+              env:
+                - name: MC_HOST_minio
+                  value: {{.Values.minioUrl | quote}}
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+                  mc cp --recursive {{join " " .Values.sourcePaths}} minio/{{.Values.destinationPath}}
+                  set +e
+                  mc rm minio/{{.Values.destinationPath}} --force --recursive --versions --rewind {{.Values.lifetime}}
+                  exit 0
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{.Values.pvc.name}}
