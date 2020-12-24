@@ -10,7 +10,7 @@ pvc:
   localPath: "/data"
 
 sourcePaths: []
-destinationPath: "minio/backup/"
+destinationPath: "backup/"
 minioUrl: ""
 lifetime: "30d"
 
