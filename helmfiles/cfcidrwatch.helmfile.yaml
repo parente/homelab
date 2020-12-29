@@ -1,7 +1,7 @@
 releases:
   # Install the cfcidrwatch app to monitor for Cloudflare CIDR block changes and notify via Pushover
   - name: cfcidrwatch
-    namespace: default
+    namespace: cfcidrwatch
     chart: homelab/cfcidrwatch
     version: 0.2.2
     atomic: true

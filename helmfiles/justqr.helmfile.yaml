@@ -1,7 +1,7 @@
 releases:
   # Install the justqr web app to generate QR codes
   - name: justqr
-    namespace: default
+    namespace: justqr
     chart: homelab/justqr
     version: 0.1.1
     atomic: true
