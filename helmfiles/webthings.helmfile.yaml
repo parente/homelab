@@ -47,5 +47,5 @@ releases:
             memory: 16Mi
             cpu: 100m
           limits:
-            memory: 16Mi
+            memory: 64Mi
             cpu: 100m
