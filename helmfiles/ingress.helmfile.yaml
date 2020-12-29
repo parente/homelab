@@ -67,7 +67,7 @@ releases:
               memory: 256Mi
   - name: ingress-nginx-policy
     namespace: ingress-nginx
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true

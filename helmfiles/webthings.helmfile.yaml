@@ -51,7 +51,7 @@ releases:
             cpu: 100m
   - name: webthings-policy
     namespace: webthings
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true

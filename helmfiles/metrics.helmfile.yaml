@@ -43,7 +43,7 @@ releases:
               memory: 128Mi
   - name: prometheus-policy
     namespace: prometheus
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true
@@ -99,7 +99,7 @@ releases:
                   userKey: {{.Values.grafanaPushoverGroupKey}}
   - name: grafana-policy
     namespace: grafana
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true

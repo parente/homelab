@@ -21,7 +21,7 @@ releases:
             memory: 8Mi
   - name: cfcidrwatch-policy
     namespace: cfcidrwatch
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true

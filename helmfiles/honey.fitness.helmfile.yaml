@@ -42,7 +42,7 @@ releases:
             - hosts: ["honey.{{.Values.defaultDomain}}"]
   - name: honey-fitness-policy
     namespace: honey-fitness
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true

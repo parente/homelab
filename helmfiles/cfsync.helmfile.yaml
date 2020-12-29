@@ -20,7 +20,7 @@ releases:
             memory: 8Mi
   - name: cfsync-policy
     namespace: cfsync
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: true

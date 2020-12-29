@@ -15,7 +15,7 @@ releases:
             - hosts: ["whoami.{{ .Values.defaultDomain }}"]
   - name: whoami-policy
     namespace: whoami
-    chart: ../charts/policy
+    chart: homelab/policy
     version: 0.1.0
     atomic: true
     installed: false
