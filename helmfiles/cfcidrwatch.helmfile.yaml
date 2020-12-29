@@ -19,3 +19,12 @@ releases:
           requests:
             cpu: 100m
             memory: 8Mi
+  - name: cfcidrwatch-policy
+    namespace: cfcidrwatch
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

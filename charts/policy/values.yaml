@@ -1,0 +1,3 @@
+egress:
+  allowAllExcept: []
+  allowAdditionalCIDR: []

@@ -65,3 +65,12 @@ releases:
             limits:
               cpu: 2
               memory: 256Mi
+  - name: ingress-nginx-policy
+    namespace: ingress-nginx
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

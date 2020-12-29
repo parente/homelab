@@ -10,7 +10,7 @@ releases:
     values:
       - env:
           CF_API_TOKEN: {{.Values.cloudflareApiToken}}
-          CF_ROOT_DOMAINS: {{join "," .Values.cfSyncDomains}}
+          CF_ROOT_DOMAINS: '{{join "," .Values.cfSyncDomains}}'
         resources:
           limits:
             cpu: 100m
@@ -18,3 +18,12 @@ releases:
           requests:
             cpu: 100m
             memory: 8Mi
+  - name: cfsync-policy
+    namespace: cfsync
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

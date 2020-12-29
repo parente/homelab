@@ -40,3 +40,12 @@ releases:
             - hosts: ["honey.fitness"]
               secretName: honey-fitness-tls
             - hosts: ["honey.{{.Values.defaultDomain}}"]
+  - name: honey-fitness-policy
+    namespace: honey-fitness
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

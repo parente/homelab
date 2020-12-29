@@ -6,6 +6,17 @@ cfSyncDomains:
   - parente.dev
   - honey.fitness
 
+# CIDR block for home LAN
+homeCIDR:
+  - "192.168.86.0/24"
+
+# CIDR blocks for homelab hosts
+homelabHosts:
+  - "192.168.86.200/32"
+  - "192.168.86.201/32"
+  - "192.168.86.202/32"
+  - "192.168.86.203/32"
+
 # From https://dash.cloudflare.com/<account id>/parente.dev/ssl-tls/origin
 defaultOriginCert: |
   -----BEGIN CERTIFICATE-----

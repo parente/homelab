@@ -84,3 +84,12 @@ releases:
                             port:
                               number: 9000
           {{- end}}
+  - name: minio-policy
+    namespace: minio
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

@@ -13,3 +13,12 @@ releases:
               paths: ["/"]
           tls:
             - hosts: ["whoami.{{ .Values.defaultDomain }}"]
+  - name: whoami-policy
+    namespace: whoami
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: false
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

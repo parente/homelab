@@ -49,3 +49,12 @@ releases:
           limits:
             memory: 512Mi
             cpu: 100m
+  - name: webthings-policy
+    namespace: webthings
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

@@ -41,6 +41,16 @@ releases:
               memory: 512Mi
             requests:
               memory: 128Mi
+  - name: prometheus-policy
+    namespace: prometheus
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}
+          allowAdditionalCIDR: {{- toYaml .Values.homelabHosts | nindent 12}}
   # Install grafana for metric visualization and alerting
   - name: grafana
     namespace: grafana
@@ -86,3 +96,12 @@ releases:
                 settings:
                   apiToken: {{.Values.grafanaPushoverAppKey}}
                   userKey: {{.Values.grafanaPushoverGroupKey}}
+  - name: grafana-policy
+    namespace: grafana
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}

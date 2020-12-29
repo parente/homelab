@@ -21,3 +21,12 @@ releases:
               paths: ["/"]
           tls:
             - hosts: ["justqr.{{ .Values.defaultDomain }}"]
+  - name: justqr-policy
+    namespace: justqr
+    chart: ../charts/policy
+    version: 0.1.0
+    atomic: true
+    installed: true
+    values:
+      - egress:
+          allowAllExcept: {{.Values.homeCIDR}}
