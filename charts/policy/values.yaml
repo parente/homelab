@@ -1,3 +1,5 @@
 egress:
+  # Disable -> disallow all egress
+  enabled: false
   allowAllExcept: []
   allowAdditionalCIDR: []

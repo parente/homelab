@@ -48,4 +48,5 @@ releases:
     installed: true
     values:
       - egress:
+          enabled: true
           allowAllExcept: {{.Values.homeCIDR}}

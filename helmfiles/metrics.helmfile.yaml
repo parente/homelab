@@ -49,6 +49,7 @@ releases:
     installed: true
     values:
       - egress:
+          enabled: true
           allowAllExcept: {{.Values.homeCIDR}}
           allowAdditionalCIDR: {{- toYaml .Values.homelabHosts | nindent 12}}
   # Install grafana for metric visualization and alerting
@@ -104,4 +105,5 @@ releases:
     installed: true
     values:
       - egress:
+          enabled: true
           allowAllExcept: {{.Values.homeCIDR}}

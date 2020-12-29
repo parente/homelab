@@ -8,13 +8,19 @@ spec:
   policyTypes:
     - Egress
   egress:
-    - to:
+    {{- if .Values.egress.enabled}}
+    - to:  
+        {{- if .Values.egress.allowAllExcept }}
         - ipBlock:
             cidr: 0.0.0.0/0
             {{- with .Values.egress.allowAllExcept}}
             except: {{- toYaml . | nindent 14}}
             {{- end }}
+        {{- end }}
         {{- range .Values.egress.allowAdditionalCIDR }}
         - ipBlock:
             cidr: {{ . | quote }}
         {{- end }}
+    {{- else }}
+      - {}
+    {{- end}}
