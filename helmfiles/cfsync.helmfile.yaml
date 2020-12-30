@@ -21,10 +21,12 @@ releases:
   - name: cfsync-policy
     namespace: cfsync
     chart: homelab/policy
-    version: 0.2.0
+    version: 0.3.0
     atomic: true
     installed: true
     values:
       - egress:
           enabled: true
-          allowAllExcept: {{.Values.homeCIDR}}
+          allowAllExceptCIDR: {{.Values.homeCIDR}}
+        ingress:
+          enabled: false

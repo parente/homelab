@@ -1,5 +1,10 @@
 egress:
   # Disable -> disallow all egress
   enabled: false
-  allowAllExcept: []
+  allowAllExceptCIDR: []
   allowAdditionalCIDR: []
+
+ingress:
+  # Disable -> disallow all ingress
+  enabled: true
+  allowNamespaces: []

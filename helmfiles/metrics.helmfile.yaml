@@ -44,14 +44,19 @@ releases:
   - name: prometheus-policy
     namespace: prometheus
     chart: homelab/policy
-    version: 0.2.0
+    version: 0.3.0
     atomic: true
     installed: true
     values:
       - egress:
           enabled: true
-          allowAllExcept: {{.Values.homeCIDR}}
+          allowAllExceptCIDR: {{.Values.homeCIDR}}
           allowAdditionalCIDR: {{- toYaml .Values.homelabHosts | nindent 12}}
+        ingress:
+          enabled: true
+          allowNamespaces:
+            - prometheus
+            - grafana
   # Install grafana for metric visualization and alerting
   - name: grafana
     namespace: grafana
@@ -100,10 +105,14 @@ releases:
   - name: grafana-policy
     namespace: grafana
     chart: homelab/policy
-    version: 0.2.0
+    version: 0.3.0
     atomic: true
     installed: true
     values:
       - egress:
           enabled: true
-          allowAllExcept: {{.Values.homeCIDR}}
+          allowAllExceptCIDR: {{.Values.homeCIDR}}
+        ingress:
+          enabled: true
+          allowNamespaces:
+            - ingress-nginx

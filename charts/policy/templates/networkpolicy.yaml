@@ -7,18 +7,33 @@ spec:
   podSelector: {}
   policyTypes:
     - Egress
+    - Ingress
   {{- if .Values.egress.enabled}}
   egress:
     - to:
-        {{- if .Values.egress.allowAllExcept }}
+        {{- if .Values.egress.allowAllExceptCIDR }}
         - ipBlock:
             cidr: 0.0.0.0/0
-            {{- with .Values.egress.allowAllExcept}}
-            except: {{- toYaml . | nindent 14}}
-            {{- end }}
+            except:
+              {{- range .Values.egress.allowAllExceptCIDR}}
+              - {{ . | quote }}
+              {{- end }}
         {{- end }}
         {{- range .Values.egress.allowAdditionalCIDR }}
         - ipBlock:
             cidr: {{ . | quote }}
         {{- end }}
+  {{- end}}
+  {{- if .Values.ingress.enabled }}
+  ingress:
+    {{- if .Values.ingress.allowNamespaces }}
+    - from:
+        {{- range .Values.ingress.allowNamespaces }}
+        - namespaceSelector:
+            matchLabels:
+              name: {{ . | quote }}
+        {{- end }}
+    {{- else }}
+    - {}
+    {{- end }}
   {{- end}}

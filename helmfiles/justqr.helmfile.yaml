@@ -24,9 +24,13 @@ releases:
   - name: justqr-policy
     namespace: justqr
     chart: homelab/policy
-    version: 0.2.0
+    version: 0.3.0
     atomic: true
     installed: true
     values:
       - egress:
           enabled: false
+        ingress:
+          enabled: true
+          allowNamespaces:
+            - ingress-nginx

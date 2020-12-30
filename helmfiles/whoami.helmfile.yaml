@@ -1,7 +1,7 @@
 releases:
   # (Optionally) Install the whoami app to test ingress
   - name: whoami
-    namespace: default
+    namespace: whoami
     chart: homelab/whoami
     version: 0.1.0
     atomic: true
@@ -16,10 +16,14 @@ releases:
   - name: whoami-policy
     namespace: whoami
     chart: homelab/policy
-    version: 0.2.0
+    version: 0.3.0
     atomic: true
     installed: false
     values:
       - egress:
           enabled: true
-          allowAllExcept: {{.Values.homeCIDR}}
+          allowAllExceptCIDR: {{.Values.homeCIDR}}
+        ingress:
+          enabled: true
+          allowNamespaces:
+            - ingress-nginx
