@@ -87,9 +87,10 @@ releases:
   - name: minio-policy
     namespace: minio
     chart: homelab/policy
-    version: 0.1.0
+    version: 0.2.0
     atomic: true
     installed: true
     values:
       - egress:
-          enabled: false
+          enabled: true
+          allowAllExcept: {{.Values.homeCIDR}}

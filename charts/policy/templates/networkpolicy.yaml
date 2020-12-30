@@ -7,9 +7,9 @@ spec:
   podSelector: {}
   policyTypes:
     - Egress
+  {{- if .Values.egress.enabled}}
   egress:
-    {{- if .Values.egress.enabled}}
-    - to:  
+    - to:
         {{- if .Values.egress.allowAllExcept }}
         - ipBlock:
             cidr: 0.0.0.0/0
@@ -21,6 +21,4 @@ spec:
         - ipBlock:
             cidr: {{ . | quote }}
         {{- end }}
-    {{- else }}
-      - {}
-    {{- end}}
+  {{- end}}
