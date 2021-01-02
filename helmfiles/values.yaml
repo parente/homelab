@@ -17,6 +17,9 @@ homelabHosts:
   - "192.168.86.202/32"
   - "192.168.86.203/32"
 
+# Switch for installing all network policies
+installNetworkPolicies: true
+
 # From https://dash.cloudflare.com/<account id>/parente.dev/ssl-tls/origin
 defaultOriginCert: |
   -----BEGIN CERTIFICATE-----

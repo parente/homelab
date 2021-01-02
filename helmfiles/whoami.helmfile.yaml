@@ -18,7 +18,7 @@ releases:
     chart: homelab/policy
     version: 0.3.0
     atomic: true
-    installed: false
+    installed: {{.Values.installNetworkPolicies}}
     values:
       - egress:
           enabled: true
