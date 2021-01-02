@@ -96,7 +96,8 @@ releases:
           allowAllExceptCIDR: {{.Values.homeCIDR}}
         ingress:
           enabled: true
-          allowNamespaces:
-            - ingress-nginx
-            - minio
-            - webthings
+          # BUG: Webthings backup fails even if namespace listed. Timing? Allow all ingress for now.
+          # allowNamespaces:
+          #   - ingress-nginx
+          #   - minio
+          #   - webthings
