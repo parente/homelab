@@ -11,12 +11,14 @@ apply: ## Apply helmfile changes to the cluster
 	@helmfile -f helmfiles/helmfile.yaml --interactive apply $(ARGS)
 
 cluster: ## Create a multi-host, multi-node cluster
+# Pin server to 1.19.4 to avoid https://github.com/k3s-io/k3s/issues/2704
 	@k3sup install \
 		--ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
 		--k3s-channel v1.19 \
-		--k3s-extra-args '--no-deploy traefik' \
+		--k3s-version 'v1.19.4+k3s2' \
+		--k3s-extra-args '--no-deploy traefik --disable-cloud-controller' \
 		--merge \
 		--context pacman
 	@k3sup join \
