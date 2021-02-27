@@ -4,6 +4,7 @@ repositories:
 
 releases:
   # Install minio object storage service
+  # https://github.com/minio/charts/tree/master/minio
   - name: minio
     namespace: minio
     chart: minio/minio

@@ -34,10 +34,12 @@ releases:
               tls.crt: {{.Values.defaultOriginCert | b64enc}}
               tls.key: {{.Values.defaultOriginKey | b64enc}}
   # Install nginx ingress controller with the Cloudflare origin pull certificate
+  # https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/CHANGELOG.md
+  # https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
-    version: 3.4.0
+    version: 3.23.0
     atomic: true
     needs:
       - ingress-nginx/cf-origin-pull-cert
