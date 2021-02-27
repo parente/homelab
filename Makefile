@@ -13,36 +13,41 @@ apply: ## Apply helmfile changes to the cluster
 apply-fast: ## Apply helmfile changes to the cluster with --skip-deps
 	@helmfile -f helmfiles/helmfile.yaml --interactive apply --skip-deps $(ARGS)
 
-cluster: ## Create a multi-host, multi-node cluster
-# Pin server to 1.19.4 to avoid https://github.com/k3s-io/k3s/issues/2704
+inky: ## Cluster server node
 	@k3sup install \
 		--ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.19 \
-		--k3s-version 'v1.19.4+k3s2' \
-		--k3s-extra-args '--no-deploy traefik --disable-cloud-controller' \
-		--merge \
+		--k3s-channel v1.20 \
+		--k3s-extra-args '--no-deploy traefik' \
 		--context pacman
+
+blinky: ## Cluster worker node
 	@k3sup join \
 		--ip 192.168.86.201 \
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.19
-	@k3sup join \
-		--ip 192.168.86.202 \
-		--server-ip 192.168.86.200 \
-		--user pi \
-		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.19
+		--k3s-channel v1.20
+
+pinky: ## Cluster worker node
 	@k3sup join \
 		--ip 192.168.86.203 \
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.19 \
+		--k3s-channel v1.20 \
 		--k3s-extra-args '--node-label homelab/external-device=zwave-controller'
+
+clyde: ## Cluster worker node
+	@k3sup join \
+		--ip 192.168.86.202 \
+		--server-ip 192.168.86.200 \
+		--user pi \
+		--ssh-key ~/.ssh/pacman \
+		--k3s-channel v1.20
+
+cluster: inky blinky pinky clyde ## Create a multi-host, multi-node cluster
 
 diff: ## Diff the helmfile with the cluster
 	@helmfile -f helmfiles/helmfile.yaml diff $(ARGS)
