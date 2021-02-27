@@ -95,6 +95,7 @@ releases:
       - egress:
           enabled: true
           allowAllExceptCIDR: {{.Values.homeCIDR}}
+          allowAdditionalCIDR: {{- toYaml .Values.homelabHosts | nindent 12}}
         ingress:
           enabled: true
           # BUG: Webthings backup fails even if namespace listed. Timing? Allow all ingress for now.

@@ -10,15 +10,16 @@ cfSyncDomains:
 homeCIDR:
   - "192.168.86.0/24"
 
-# CIDR blocks for homelab hosts
+# CIDR blocks for homelab router and hosts
 homelabHosts:
+  - "192.168.86.1/32"
   - "192.168.86.200/32"
   - "192.168.86.201/32"
   - "192.168.86.202/32"
   - "192.168.86.203/32"
 
 # Switch for installing all network policies
-installNetworkPolicies: true
+installNetworkPolicies: false
 
 # From https://dash.cloudflare.com/<account id>/parente.dev/ssl-tls/origin
 defaultOriginCert: |

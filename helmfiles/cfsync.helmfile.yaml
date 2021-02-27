@@ -28,5 +28,6 @@ releases:
       - egress:
           enabled: true
           allowAllExceptCIDR: {{.Values.homeCIDR}}
+          allowAdditionalCIDR: {{- toYaml .Values.homelabHosts | nindent 12}}
         ingress:
           enabled: false
