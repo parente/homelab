@@ -10,6 +10,9 @@ help:
 apply: ## Apply helmfile changes to the cluster
 	@helmfile -f helmfiles/helmfile.yaml --interactive apply $(ARGS)
 
+apply-fast: ## Apply helmfile changes to the cluster with --skip-deps
+	@helmfile -f helmfiles/helmfile.yaml --interactive apply --skip-deps $(ARGS)
+
 cluster: ## Create a multi-host, multi-node cluster
 # Pin server to 1.19.4 to avoid https://github.com/k3s-io/k3s/issues/2704
 	@k3sup install \
@@ -43,6 +46,9 @@ cluster: ## Create a multi-host, multi-node cluster
 
 diff: ## Diff the helmfile with the cluster
 	@helmfile -f helmfiles/helmfile.yaml diff $(ARGS)
+
+diff-fast: ## Diff the helmfile with the cluster with --skip-deps
+	@helmfile -f helmfiles/helmfile.yaml diff --skip-deps $(ARGS)
 
 edit-secrets: ## Edit helm secrets in VSCode
 	@EDITOR="code --wait" helm secrets edit helmfiles/secrets.yaml
