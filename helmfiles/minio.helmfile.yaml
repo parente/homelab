@@ -1,8 +1,55 @@
 repositories:
   - name: minio
-    url: https://helm.min.io/
+    url: https://operator.min.io/
 
 releases:
+  # Install minio-operator CRDs before the operator itself
+  - name: minio-operator-crds
+    namespace: minio-operator
+    chart: kubernetes-incubator/raw
+    version: 0.2.3
+    atomic: true
+    installed: false
+    hooks:
+      - events: ['presync']
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - https://raw.githubusercontent.com/minio/operator/v4.3.2/helm/minio-operator/crds/minio.min.io_tenants.yaml
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: helmfile-minio-operator-crds-installed
+              namespace: minio-operator
+
+  # Install minio operator and create a tenant
+  # https://github.com/minio/operator/blob/master/helm/minio-operator
+  - name: minio-operator
+    namespace: minio-operator
+    chart: minio/minio-operator
+    version: 4.3.2
+    needs:
+      - minio-operator/minio-operator-crds
+    atomic: true
+    installed: false
+    values:
+      - tenants:
+          - name: minio
+            namespace: minio
+            pools:
+              - servers: 4
+                volumesPerServer: 1
+                size: 10Gi
+                storageClassName: local-path
+            secrets:
+              enabled: true
+              name: minio-secret
+              accessKey: {{.Values.minioAccessKey}}
+              secretKey: {{.Values.minioSecretKey}}
   # Install minio object storage service
   # https://github.com/minio/charts/tree/master/minio
   - name: minio
