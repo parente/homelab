@@ -12,7 +12,7 @@ releases:
     chart: prometheus-community/prometheus
     version: 13.3.3
     atomic: true
-    installed: true
+    installed: false
     values:
       - alertmanager:
           enabled: false
@@ -65,7 +65,7 @@ releases:
     chart: grafana/grafana
     version: 6.4.4
     atomic: true
-    installed: true
+    installed: false
     values:
       - adminUser: {{.Values.grafanaUser}}
         adminPassword: {{.Values.grafanaPassword}}
