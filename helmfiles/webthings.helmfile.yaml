@@ -27,7 +27,7 @@ releases:
     chart: homelab/minio-backup
     version: 0.1.1
     atomic: true
-    installed: true
+    installed: false
     values:
       - image:
           tag: RELEASE.2020-11-25T23-04-07Z

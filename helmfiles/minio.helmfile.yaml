@@ -10,7 +10,7 @@ releases:
     chart: minio/minio
     version: 8.0.8
     atomic: true
-    installed: true
+    installed: false
     values:
       - accessKey: {{.Values.minioAccessKey}}
         secretKey: {{.Values.minioSecretKey}}
@@ -36,7 +36,7 @@ releases:
     chart: incubator/raw
     version: 0.2.3
     atomic: true
-    installed: true
+    installed: false
     values:
       - resources:
           {{- range .Values.minioStaticSites}}
