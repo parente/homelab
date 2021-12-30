@@ -1,0 +1,44 @@
+releases:
+  - name: blog
+    namespace: blog
+    chart: bitnami/nginx
+    version: 9.5.15
+    atomic: true
+    installed: false
+    values:
+      - image:
+          repository: arm32v7/nginx
+          tag: "1.20"
+        cloneStaticSiteFromGit:
+          enabled: true
+          image:
+            repository: alpine/git
+            tag: v2.32.0
+          repository: https://github.com/parente/blog.git
+          branch: gh-pages
+          gitClone:
+            command:
+              - /bin/sh
+              - -ec
+              - |
+                git clone https://github.com/parente/blog.git --branch gh-pages /app
+          gitSync:
+            command:
+              - /bin/sh
+              - -ec
+              - |
+                while true; do
+                  cd /app && git pull origin gh-pages
+                  sleep 60
+                done
+        containerPorts:
+          http: 80
+        ingress:
+          enabled: true
+          pathType: Prefix
+          hostname: blog.parente.dev
+          tls: false
+          annotations:
+            kubernetes.io/ingress.class: nginx
+        service:
+          type: ClusterIP
