@@ -12,14 +12,7 @@ repositories:
     url: https://charts.helm.sh/incubator
   - name: stable
     url: https://charts.helm.sh/stable
-bases:
-  - cfcidrwatch.helmfile.yaml
-  - cfsync.helmfile.yaml
-  - honey.fitness.helmfile.yaml
-  - ingress.helmfile.yaml
-  - justqr.helmfile.yaml
-  - metrics.helmfile.yaml
-  - minio.helmfile.yaml
-  - storage.helmfile.yaml
-  - webthings.helmfile.yaml
-  - whoami.helmfile.yaml
+helmfiles:
+  - path: ./*.helmfile.yaml
+    values:
+      - {{toYaml .Values | nindent 8}}
