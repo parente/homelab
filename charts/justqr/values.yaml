@@ -2,8 +2,8 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/parente/justqr
-  pullPolicy: IfNotPresent
-  tag: ""
+  pullPolicy: Always
+  tag: "latest"
 
 ingress:
   enabled: true
@@ -11,3 +11,5 @@ ingress:
     kubernetes.io/ingress.class: nginx
   hosts: []
   tls: []
+
+affinity: {}

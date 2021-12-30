@@ -18,7 +18,7 @@ releases:
   - name: honey-fitness
     namespace: honey-fitness
     chart: homelab/honey-fitness
-    version: 0.1.0
+    version: 0.2.0
     atomic: true
     installed: true
     needs:
@@ -40,6 +40,19 @@ releases:
             - hosts: ["honey.fitness"]
               secretName: honey-fitness-tls
             - hosts: ["honey.{{.Values.defaultDomain}}"]
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/instance
+                        operator: In
+                        values:
+                          - honey-fitness
+                  topologyKey: kubernetes.io/hostname
+
   - name: honey-fitness-policy
     namespace: honey-fitness
     chart: homelab/policy

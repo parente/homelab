@@ -11,3 +11,5 @@ ingress:
     kubernetes.io/ingress.class: nginx
   hosts: []
   tls: []
+
+affinity: {}

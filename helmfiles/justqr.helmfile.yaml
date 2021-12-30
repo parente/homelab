@@ -3,7 +3,7 @@ releases:
   - name: justqr
     namespace: justqr
     chart: homelab/justqr
-    version: 0.1.1
+    version: 0.2.0
     atomic: true
     installed: true
     values:
@@ -21,6 +21,18 @@ releases:
               paths: ["/"]
           tls:
             - hosts: ["justqr.{{ .Values.defaultDomain }}"]
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/instance
+                        operator: In
+                        values:
+                          - justqr
+                  topologyKey: kubernetes.io/hostname
   - name: justqr-policy
     namespace: justqr
     chart: homelab/policy

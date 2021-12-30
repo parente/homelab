@@ -2,5 +2,5 @@ apiVersion: v2
 name: justqr
 description: Deploys the justqr web app which generates QR codes from text
 type: application
-version: 0.1.1
-appVersion: 0.1.1
+version: 0.2.0
+appVersion: 0.2.0
