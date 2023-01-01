@@ -6,8 +6,6 @@ releases:
     version: 0.2.2
     atomic: true
     installed: true
-    needs:
-      - kube-system/retained-local-path
     values:
       - env:
           PUSHOVER_APP_KEY: {{.Values.pushoverAppKey}}
