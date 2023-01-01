@@ -18,8 +18,7 @@ inky: ## Cluster server node
 		--ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.22 \
-		--k3s-extra-args '--no-deploy traefik' \
+		--k3s-channel stable \
 		--context pacman
 
 blinky: ## Cluster worker node
@@ -28,7 +27,7 @@ blinky: ## Cluster worker node
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.22
+		--k3s-channel stable
 
 pinky: ## Cluster worker node
 	@k3sup join \
@@ -36,7 +35,7 @@ pinky: ## Cluster worker node
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.22 \
+		--k3s-channel stable \
 		--k3s-extra-args '--node-label homelab/external-device=zwave-controller'
 
 clyde: ## Cluster worker node
@@ -45,7 +44,7 @@ clyde: ## Cluster worker node
 		--server-ip 192.168.86.200 \
 		--user pi \
 		--ssh-key ~/.ssh/pacman \
-		--k3s-channel v1.22
+		--k3s-channel stable
 
 cluster: inky blinky pinky clyde ## Create a multi-host, multi-node cluster
 
