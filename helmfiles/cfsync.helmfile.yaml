@@ -6,7 +6,7 @@ releases:
     chart: homelab/cfsync
     version: 0.4.0
     atomic: true
-    installed: true
+    installed: false
     values:
       - env:
           CF_API_TOKEN: {{.Values.cloudflareApiToken}}

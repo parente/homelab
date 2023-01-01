@@ -5,6 +5,7 @@ releases:
     chart: incubator/raw
     version: 0.2.3
     atomic: true
+    installed: false
     values:
       - resources:
           - apiVersion: v1
@@ -20,7 +21,7 @@ releases:
     chart: homelab/honey-fitness
     version: 0.2.0
     atomic: true
-    installed: true
+    installed: false
     needs:
       - honey-fitness/cf-honey-fitness-origin-cert
     values:

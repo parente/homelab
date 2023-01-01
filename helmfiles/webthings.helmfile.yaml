@@ -4,7 +4,7 @@ releases:
     chart: homelab/webthings
     version: 1.0.0-r1
     atomic: true
-    installed: true
+    installed: false
     values:
       - nodeSelector:
           homelab/external-device: zwave-controller
